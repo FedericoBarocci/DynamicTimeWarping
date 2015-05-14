@@ -20,5 +20,6 @@ public class Main {
 		System.out.print("Reading " + System.getProperty("user.dir") + csvFileName + " ");
 		tokenReader.read(csvFileName);
 		System.out.println("done.");
+		
 	}
 }
