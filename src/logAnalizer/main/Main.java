@@ -1,8 +1,9 @@
-package tirocinio.main;
+package logAnalizer.main;
 
-import tirocinio._di.ModuleInjector;
-import tirocinio.token.reader.TokenReader;
-import tirocinio.token.reader.TokenReaderFactory;
+import logAnalizer._di.ModuleInjector;
+import logAnalizer.token.Tokens;
+import logAnalizer.token.reader.TokenReader;
+import logAnalizer.token.reader.TokenReaderFactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -18,8 +19,8 @@ public class Main {
 		TokenReader tokenReader = tokenReaderFactory.create();
 		
 		System.out.print("Reading " + System.getProperty("user.dir") + csvFileName + " ");
-		tokenReader.read(csvFileName);
+		Tokens tokens = tokenReader.read(csvFileName, 2);
 		System.out.println("done.");
-		
+		System.out.println(" -> Lines: " + tokens.getTokens().size());
 	}
 }

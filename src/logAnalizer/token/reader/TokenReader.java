@@ -1,11 +1,12 @@
-package tirocinio.token.reader;
+package logAnalizer.token.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
-import tirocinio.token.Tokens;
+import logAnalizer.token.Tokens;
 
 import com.google.inject.assistedinject.AssistedInject;
 
@@ -18,16 +19,16 @@ public class TokenReader {
 		this.tokens = tokens;
 	}
 
-	public Tokens read(String path) {
+	public Tokens read(String path, int key) {
 		BufferedReader bufferedReader;
 		String line = "";
-		String cvsSplitBy = ",";
+		String cvsSplitBy = ";";
 
 		try {
 			bufferedReader = new BufferedReader(new FileReader(path));
 
 			while ((line = bufferedReader.readLine()) != null) {
-				tokens.add(line.split(cvsSplitBy));
+				tokens.add(Arrays.asList(line.split(cvsSplitBy)), key);
 			}
 			
 			bufferedReader.close();

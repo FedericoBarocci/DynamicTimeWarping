@@ -1,6 +1,6 @@
-package tirocinio._di;
+package logAnalizer._di;
 
-import tirocinio.token.reader.TokenReaderFactory;
+import logAnalizer.token.reader.TokenReaderFactory;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
