@@ -34,7 +34,9 @@ public class Tokens {
 		/*Timestamp.valueOf(elements.get(key))*/
 		
 		try {
-			tokens.put(target.parse(elements.get(key)), values);
+			Date date = target.parse(elements.get(key));
+			tokens.put(date, values);
+//			System.out.println(date.toString() + " -> " + values);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
