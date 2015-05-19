@@ -3,42 +3,64 @@ package logAnalizer.token;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+import logAnalizer.token.keeper.TokenKeeper;
+import logAnalizer.token.keeper.TokenKeeperFactory;
+
+import org.apache.commons.lang3.time.DateUtils;
+
 public class Tokens {
 
 	private final DateFormat target = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss.SSSSSS");
 
-	//private List<String[]> tokens = new ArrayList<>();
-	private NavigableMap<Date, String> tokens = new TreeMap<Date, String>();
+	private NavigableMap<Date, TokenKeeper> tokens = new TreeMap<Date, TokenKeeper>();
 
-	public Collection<String> getTokens() {
-		return tokens.values();
+	public TokenKeeper unify() {
+		TokenKeeper app = TokenKeeperFactory.create();
+		
+		tokens.values().forEach(c->{
+			app.add(c.getTokenMap());
+		});
+		
+		return app;
 	}
 	
 	public void add(List<String> elements, int key) {
-		List<String> filtered = new ArrayList<String>();
-		
-		for(int i=0; i<elements.size(); i++) {
-			if(i != key) {
-				filtered.add(elements.get(i));
-			}
-		}
-		
-		String values = String.join(",", filtered);
-		/*Timestamp.valueOf(elements.get(key))*/
+		Date dateKey;
 		
 		try {
 			Date date = target.parse(elements.get(key));
-			tokens.put(date, values);
-//			System.out.println(date.toString() + " -> " + values);
-		} catch (ParseException e) {
+			dateKey = DateUtils.truncate(date, Calendar.HOUR);
+			
+			elements.remove(key);
+			
+			if(tokens.containsKey(dateKey)) {
+				tokens.get(dateKey).add(elements);
+			}
+			else {
+				tokens.put(dateKey, TokenKeeperFactory.create(elements));
+			}
+
+			//tokens.put(date, values);
+		} 
+		catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int size() {
+		return tokens.size();
+	}
+	
+	public void scan() {
+		tokens.forEach((key, value)->{
+			System.out.println(key);
+			value.getTokenMap().scan();
+		});
 	}
 }

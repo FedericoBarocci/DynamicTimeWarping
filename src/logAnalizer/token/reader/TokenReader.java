@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import logAnalizer.token.Tokens;
 
@@ -20,6 +22,7 @@ public class TokenReader {
 	}
 
 	public Tokens read(String path, int key) {
+		List<String> values = new ArrayList<String>();
 		BufferedReader bufferedReader;
 		String line = "";
 		String cvsSplitBy = ";";
@@ -28,7 +31,9 @@ public class TokenReader {
 			bufferedReader = new BufferedReader(new FileReader(path));
 
 			while ((line = bufferedReader.readLine()) != null) {
-				tokens.add(Arrays.asList(line.split(cvsSplitBy)), key);
+				values.addAll(Arrays.asList(line.split(cvsSplitBy)));
+				tokens.add(values, key);
+				values.clear();
 			}
 			
 			bufferedReader.close();
