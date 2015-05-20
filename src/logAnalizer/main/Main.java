@@ -28,8 +28,8 @@ public class Main {
 		tokens.scan();
 		
 		System.out.println(" -> Global tokens count:");
-		tokens.unify().getTokenMap().get().forEach((key,value)->{
-			System.out.println(key + " \t-> " + value);
+		tokens.unify().forEach((key,value)->{
+			System.out.println("\t" + key + ": " + value);
 		});
 	}
 }

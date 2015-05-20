@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import logAnalizer.token.keeper.TokenKeeper;
 import logAnalizer.token.keeper.TokenKeeperFactory;
+import logAnalizer.token.map.TokenMap;
 
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -20,11 +21,11 @@ public class Tokens {
 
 	private NavigableMap<Date, TokenKeeper> tokens = new TreeMap<Date, TokenKeeper>();
 
-	public TokenKeeper unify() {
-		TokenKeeper app = TokenKeeperFactory.create();
+	public TokenMap unify() {
+		TokenMap app = new TokenMap();
 		
 		tokens.values().forEach(c->{
-			app.add(c.getTokenMap());
+			app.putAll(c.getTokenMap());
 		});
 		
 		return app;
@@ -45,8 +46,6 @@ public class Tokens {
 			else {
 				tokens.put(dateKey, TokenKeeperFactory.create(elements));
 			}
-
-			//tokens.put(date, values);
 		} 
 		catch (ParseException e) {
 			e.printStackTrace();
@@ -60,7 +59,7 @@ public class Tokens {
 	public void scan() {
 		tokens.forEach((key, value)->{
 			System.out.println(key);
-			value.getTokenMap().scan();
+			value.scan();
 		});
 	}
 }

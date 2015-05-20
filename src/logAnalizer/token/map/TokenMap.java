@@ -1,36 +1,47 @@
 package logAnalizer.token.map;
 
-import java.util.NavigableMap;
+import java.util.Map;
 import java.util.TreeMap;
 
-public class TokenMap {
+public class TokenMap extends TreeMap<String, Integer> {
 
-	private NavigableMap<String, Integer> tokenMap = new TreeMap<String, Integer>();
+	private static final long serialVersionUID = 6919333871411604844L;
 
-	public void add(String key, Integer value) {
+	@Override
+	public Integer put(String key, Integer value) {
 		String id = key.trim();
+		Integer update = value + get(id);
 		
-		if(tokenMap.containsKey(id)) {
-			Integer count = tokenMap.get(id);
-			count += value;
-			tokenMap.put(id, count);
+		super.put(id, update);
+		
+		return update;
+	}
+	
+	public Integer put(String key) {
+		return put(key, 1);
+	}
+	
+	@Override
+	public Integer get(Object key) {
+		Integer result = 0;
+		
+		if(containsKey(key)) {
+			result = super.get(key);
 		}
-		else {
-			tokenMap.put(id, value);
-		}
+		
+		return result;
 	}
 	
-	public void add(String key) {
-		add(key, 1);
+	@Override
+	public void putAll(Map<? extends String, ? extends Integer> map) {
+		map.forEach((key, value) -> {
+			put(key, value);
+		});
 	}
 	
-	public NavigableMap<String, Integer> get() {
-		return tokenMap;
-	}
-	
-	public void scan() {
-		tokenMap.forEach((key,value)->{
-			System.out.println("\t" + key + ": " + value);
+	public void empty() {
+		this.values().forEach(c->{
+			c = 0;
 		});
 	}
 }
