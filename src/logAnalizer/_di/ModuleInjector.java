@@ -1,5 +1,6 @@
 package logAnalizer._di;
 
+import logAnalizer.dtw.DTWFactory;
 import logAnalizer.token.reader.TokenReaderFactory;
 
 import com.google.inject.AbstractModule;
@@ -9,6 +10,7 @@ public class ModuleInjector extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		install(new FactoryModuleBuilder().build(TokenReaderFactory.class));		
+		install(new FactoryModuleBuilder().build(TokenReaderFactory.class));
+		install(new FactoryModuleBuilder().build(DTWFactory.class));
 	}
 }

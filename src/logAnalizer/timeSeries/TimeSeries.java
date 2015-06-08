@@ -1,4 +1,4 @@
-package logAnalizer.token;
+package logAnalizer.timeSeries;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,12 +15,18 @@ import logAnalizer.token.map.TokenMap;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-public class Tokens {
+public class TimeSeries {
 
 	private final DateFormat target = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss.SSSSSS");
 
 	private NavigableMap<Date, TokenKeeper> tokens = new TreeMap<Date, TokenKeeper>();
 
+	public TimeSeries() {}
+	
+	public TimeSeries(NavigableMap<Date, TokenKeeper> tokens) {
+		this.tokens = tokens;
+	}
+	
 	public TokenMap unify() {
 		TokenMap app = new TokenMap();
 		
@@ -56,10 +62,33 @@ public class Tokens {
 		return tokens.size();
 	}
 	
+	public TokenMap getIndex(int i) {
+		return ((TokenKeeper) tokens.values().toArray()[i]).getTokenMap();
+	}
+	
+	public Date getKey(int i) {
+		return (Date) tokens.keySet().toArray()[i];
+	}
+	
 	public void scan() {
-		tokens.forEach((key, value)->{
+		/*tokens.forEach((key, value)->{
 			System.out.println(key);
 			value.scan();
-		});
+		});*/
+		
+		for(int i = 0; i< tokens.size(); i++) {
+			System.out.println("" + i + ". " + tokens.keySet().toArray()[i]);
+			((TokenKeeper) (tokens.values().toArray()[i])).scan();
+		}
+	}
+	
+	public TimeSeries getSegment(int start, int end) {
+		Date arraydate[] = tokens.keySet().toArray(new Date[0]);
+		Date d1 = arraydate[start];
+		Date d2 = arraydate[end];
+//		Date d1 = (Date) tokens.keySet().toArray()[start];
+//		Date d2 = (Date) tokens.keySet().toArray()[end];
+		
+		return new TimeSeries(tokens.subMap(d1, true, d2, true));
 	}
 }

@@ -1,8 +1,8 @@
-package logAnalizer.util;
+package logAnalizer.timeSeries;
 
 import logAnalizer.token.map.TokenMap;
 
-public enum TokenMapUtil {
+public enum Distances {
 
 	INSTANCE;
 	

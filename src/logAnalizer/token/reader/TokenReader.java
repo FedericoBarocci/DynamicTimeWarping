@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import logAnalizer.token.Tokens;
+import logAnalizer.timeSeries.TimeSeries;
 
 import com.google.inject.assistedinject.AssistedInject;
 
 public class TokenReader {
 	
-	private final Tokens tokens;
+	private final TimeSeries tokens;
 
 	@AssistedInject
-	public TokenReader(Tokens tokens) {
+	public TokenReader(TimeSeries tokens) {
 		this.tokens = tokens;
 	}
 
-	public Tokens read(String path, int key) {
+	public TimeSeries read(String path, int key) {
 		List<String> values = new ArrayList<String>();
 		BufferedReader bufferedReader;
 		String line = "";
