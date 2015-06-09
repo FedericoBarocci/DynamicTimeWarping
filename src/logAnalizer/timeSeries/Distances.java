@@ -3,15 +3,36 @@ package logAnalizer.timeSeries;
 import java.util.HashSet;
 import java.util.Set;
 
+import logAnalizer.timeSeries.functions.DistanceFunction;
+import logAnalizer.timeSeries.functions.EuclideanDistance;
+import logAnalizer.timeSeries.functions.ManatthanDistance;
 import logAnalizer.token.map.TokenMap;
 
 public enum Distances {
 
-	INSTANCE;
+	EUCLIDEAN(new EuclideanDistance()),
+	MANATTHAN(new ManatthanDistance());
 	
-	private Double distance;
+	private final DistanceFunction distanceFunction;
 	
-	public Double manatthanDistance(TokenMap from, TokenMap to) {
+	Distances(DistanceFunction distanceFunction) {
+		this.distanceFunction = distanceFunction;
+	}
+	
+	public double calculate(TokenMap from, TokenMap to) {
+		return distanceFunction.distance(mergeKeys(from, to), from, to);
+	}
+	
+	private Set<String> mergeKeys(TokenMap a, TokenMap b) {
+		Set<String> result = new HashSet<String>();
+		
+		result.addAll(a.keySet());
+		result.addAll(b.keySet());
+		
+		return result;
+	}
+	
+	/*public Double manatthanDistance(TokenMap from, TokenMap to) {
 		Set<String> keys = mergeKeys(from, to);
 		distance = 0.0;
 		
@@ -39,14 +60,6 @@ public enum Distances {
 		distance = Math.sqrt(distance);
 		
 		return distance;
-	}
-	
-	private Set<String> mergeKeys(TokenMap a, TokenMap b) {
-		Set<String> result = new HashSet<String>();
-		
-		result.addAll(a.keySet());
-		result.addAll(b.keySet());
-		
-		return result;
-	}
+	}*/
+
 }
