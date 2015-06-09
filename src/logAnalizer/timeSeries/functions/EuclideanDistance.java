@@ -4,7 +4,7 @@ import java.util.Set;
 
 import logAnalizer.token.map.TokenMap;
 
-public class EuclideanDistance implements DistanceFunction {
+public class EuclideanDistance implements IDistanceFunction {
 
 	private Double distance;
 	

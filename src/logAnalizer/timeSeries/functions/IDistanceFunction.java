@@ -4,6 +4,6 @@ import java.util.Set;
 
 import logAnalizer.token.map.TokenMap;
 
-public interface DistanceFunction {
+public interface IDistanceFunction {
 	double distance(Set<String> keys, TokenMap from, TokenMap to);
 }

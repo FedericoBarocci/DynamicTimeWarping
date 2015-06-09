@@ -23,13 +23,7 @@ public class TokenMap extends TreeMap<String, Integer> {
 	
 	@Override
 	public Integer get(Object key) {
-		Integer result = 0;
-		
-		if(containsKey(key)) {
-			result = super.get(key);
-		}
-		
-		return result;
+		return containsKey(key) ? super.get(key) : 0;
 	}
 	
 	@Override

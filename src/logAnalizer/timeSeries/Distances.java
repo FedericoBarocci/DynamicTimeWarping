@@ -3,7 +3,7 @@ package logAnalizer.timeSeries;
 import java.util.HashSet;
 import java.util.Set;
 
-import logAnalizer.timeSeries.functions.DistanceFunction;
+import logAnalizer.timeSeries.functions.IDistanceFunction;
 import logAnalizer.timeSeries.functions.EuclideanDistance;
 import logAnalizer.timeSeries.functions.ManatthanDistance;
 import logAnalizer.token.map.TokenMap;
@@ -13,9 +13,9 @@ public enum Distances {
 	EUCLIDEAN(new EuclideanDistance()),
 	MANATTHAN(new ManatthanDistance());
 	
-	private final DistanceFunction distanceFunction;
+	private final IDistanceFunction distanceFunction;
 	
-	Distances(DistanceFunction distanceFunction) {
+	Distances(IDistanceFunction distanceFunction) {
 		this.distanceFunction = distanceFunction;
 	}
 	
@@ -31,35 +31,5 @@ public enum Distances {
 		
 		return result;
 	}
-	
-	/*public Double manatthanDistance(TokenMap from, TokenMap to) {
-		Set<String> keys = mergeKeys(from, to);
-		distance = 0.0;
-		
-		keys.forEach((key) -> {
-			int a = from.get(key);
-			int b = to.get(key);
-			
-			distance += Math.abs(a - b);
-		});
-		
-		return distance;
-	}
-	
-	public Double euclideanDistance(TokenMap from, TokenMap to) {
-		Set<String> keys = mergeKeys(from, to);
-		distance = 0.0;
-		
-		keys.forEach((key) -> {
-			int a = from.get(key);
-			int b = to.get(key);
-			
-			distance += Math.pow(a - b, 2);
-		});
-		
-		distance = Math.sqrt(distance);
-		
-		return distance;
-	}*/
 
 }

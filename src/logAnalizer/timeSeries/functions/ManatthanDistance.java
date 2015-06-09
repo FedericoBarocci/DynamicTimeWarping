@@ -4,7 +4,7 @@ import java.util.Set;
 
 import logAnalizer.token.map.TokenMap;
 
-public class ManatthanDistance implements DistanceFunction {
+public class ManatthanDistance implements IDistanceFunction {
 
 	private Double distance;
 	

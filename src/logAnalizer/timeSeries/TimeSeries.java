@@ -71,11 +71,6 @@ public class TimeSeries {
 	}
 	
 	public void scan() {
-		/*tokens.forEach((key, value)->{
-			System.out.println(key);
-			value.scan();
-		});*/
-		
 		for(int i = 0; i< tokens.size(); i++) {
 			System.out.println("" + i + ". " + tokens.keySet().toArray()[i]);
 			((TokenKeeper) (tokens.values().toArray()[i])).scan();
@@ -86,8 +81,6 @@ public class TimeSeries {
 		Date arraydate[] = tokens.keySet().toArray(new Date[0]);
 		Date d1 = arraydate[start];
 		Date d2 = arraydate[end];
-//		Date d1 = (Date) tokens.keySet().toArray()[start];
-//		Date d2 = (Date) tokens.keySet().toArray()[end];
 		
 		return new TimeSeries(tokens.subMap(d1, true, d2, true));
 	}

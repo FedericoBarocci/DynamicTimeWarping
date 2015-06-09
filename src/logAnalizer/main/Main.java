@@ -29,7 +29,7 @@ public class Main {
 
 		System.out.print("Reading " + System.getProperty("user.dir")
 				+ csvFileName + " ... ");
-		TimeSeries timeSeries = tokenReader.read(csvFileName, 2);
+		TimeSeries timeSeries = tokenReader.read(csvFileName, 2, ";");
 		System.out.println("done.");
 
 		System.out.println(" -> Time intervals count: " + timeSeries.size());

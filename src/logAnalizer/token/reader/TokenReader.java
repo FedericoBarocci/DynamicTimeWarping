@@ -21,11 +21,10 @@ public class TokenReader {
 		this.tokens = tokens;
 	}
 
-	public TimeSeries read(String path, int key) {
+	public TimeSeries read(String path, int key, String cvsSplitBy) {
 		List<String> values = new ArrayList<String>();
 		BufferedReader bufferedReader;
 		String line = "";
-		String cvsSplitBy = ";";
 
 		try {
 			bufferedReader = new BufferedReader(new FileReader(path));

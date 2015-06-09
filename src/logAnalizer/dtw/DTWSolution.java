@@ -1,6 +1,7 @@
 package logAnalizer.dtw;
 
 public class DTWSolution {
+	
 	private int index;
 	private double distance;
 	
