@@ -21,4 +21,5 @@ public class DTW {
 		
 		return matrix.get(n-1, m-1);
 	}
+
 }
