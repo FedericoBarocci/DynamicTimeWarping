@@ -19,7 +19,15 @@ public class Main {
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new ModuleInjector());
 
-		String csvFileName = "data/filter_eventlog.csv";
+//		String csvFileName = "data/filter_eventlog.csv";
+//		int indexkey = 2;
+		
+		if (args.length != 2) {
+			System.err.println("Usage: [Filename] [indexKey]");
+		}
+		
+		String csvFileName = args[0];
+		int indexKey = Integer.parseInt(args[1]);
 
 		TokenReaderFactory tokenReaderFactory = injector.getInstance(TokenReaderFactory.class);
 		TokenReader tokenReader = tokenReaderFactory.create();
@@ -29,7 +37,7 @@ public class Main {
 
 		System.out.print("Reading " + System.getProperty("user.dir")
 				+ csvFileName + " ... ");
-		TimeSeries timeSeries = tokenReader.read(csvFileName, 2, ";");
+		TimeSeries timeSeries = tokenReader.read(csvFileName, indexKey, ";");
 		System.out.println("done.");
 
 		System.out.println(" -> Time intervals count: " + timeSeries.size());
