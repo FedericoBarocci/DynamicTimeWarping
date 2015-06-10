@@ -1,4 +1,4 @@
-package logAnalizer.token.map;
+package logAnalyzer.token.map;
 
 import java.util.Map;
 import java.util.TreeMap;

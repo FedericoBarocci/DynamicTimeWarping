@@ -1,12 +1,12 @@
-package logAnalizer.timeSeries;
+package logAnalyzer.timeSeries;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import logAnalizer.timeSeries.functions.IDistanceFunction;
-import logAnalizer.timeSeries.functions.EuclideanDistance;
-import logAnalizer.timeSeries.functions.ManatthanDistance;
-import logAnalizer.token.map.TokenMap;
+import logAnalyzer.timeSeries.functions.EuclideanDistance;
+import logAnalyzer.timeSeries.functions.IDistanceFunction;
+import logAnalyzer.timeSeries.functions.ManatthanDistance;
+import logAnalyzer.token.map.TokenMap;
 
 public enum Distances {
 

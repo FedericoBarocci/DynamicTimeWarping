@@ -1,4 +1,4 @@
-package logAnalizer.token.reader;
+package logAnalyzer.token.reader;
 
 public interface TokenReaderFactory {
 	TokenReader create();

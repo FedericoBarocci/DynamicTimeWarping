@@ -1,4 +1,4 @@
-package logAnalizer.token.keeper;
+package logAnalyzer.token.keeper;
 
 import java.util.Collections;
 import java.util.List;

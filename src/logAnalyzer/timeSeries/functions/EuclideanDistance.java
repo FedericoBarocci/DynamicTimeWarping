@@ -1,8 +1,8 @@
-package logAnalizer.timeSeries.functions;
+package logAnalyzer.timeSeries.functions;
 
 import java.util.Set;
 
-import logAnalizer.token.map.TokenMap;
+import logAnalyzer.token.map.TokenMap;
 
 public class EuclideanDistance implements IDistanceFunction {
 

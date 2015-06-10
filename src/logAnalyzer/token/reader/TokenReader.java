@@ -1,4 +1,4 @@
-package logAnalizer.token.reader;
+package logAnalyzer.token.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import logAnalizer.timeSeries.TimeSeries;
+import logAnalyzer.timeSeries.TimeSeries;
 
 import com.google.inject.assistedinject.AssistedInject;
 

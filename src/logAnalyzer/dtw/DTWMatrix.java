@@ -1,4 +1,4 @@
-package logAnalizer.dtw;
+package logAnalyzer.dtw;
 
 public class DTWMatrix {
 

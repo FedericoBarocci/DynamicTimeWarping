@@ -1,8 +1,8 @@
-package logAnalizer.token.keeper;
+package logAnalyzer.token.keeper;
 
 import java.util.List;
 
-import logAnalizer.token.map.TokenMap;
+import logAnalyzer.token.map.TokenMap;
 
 public class TokenKeeper {
 

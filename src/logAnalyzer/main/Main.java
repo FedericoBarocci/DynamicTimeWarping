@@ -1,15 +1,15 @@
-package logAnalizer.main;
+package logAnalyzer.main;
 
 import java.util.Random;
 
-import logAnalizer._di.ModuleInjector;
-import logAnalizer.dtw.DTW;
-import logAnalizer.dtw.DTWFactory;
-import logAnalizer.dtw.DTWSolution;
-import logAnalizer.timeSeries.Distances;
-import logAnalizer.timeSeries.TimeSeries;
-import logAnalizer.token.reader.TokenReader;
-import logAnalizer.token.reader.TokenReaderFactory;
+import logAnalyzer._di.ModuleInjector;
+import logAnalyzer.dtw.DTW;
+import logAnalyzer.dtw.DTWFactory;
+import logAnalyzer.dtw.DTWSolution;
+import logAnalyzer.timeSeries.Distances;
+import logAnalyzer.timeSeries.TimeSeries;
+import logAnalyzer.token.reader.TokenReader;
+import logAnalyzer.token.reader.TokenReaderFactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -17,18 +17,17 @@ import com.google.inject.Injector;
 public class Main {
 
 	public static void main(String[] args) {
-		Injector injector = Guice.createInjector(new ModuleInjector());
-
-//		String csvFileName = "data/filter_eventlog.csv";
-//		int indexkey = 2;
-		
-		if (args.length != 2) {
-			System.err.println("Usage: [Filename] [indexKey]");
+		if (args.length != 3) {
+			System.err.println("Usage: [Filename] [indexKey] [sizeSegment]");
+			System.exit(-1);
 		}
 		
 		String csvFileName = args[0];
 		int indexKey = Integer.parseInt(args[1]);
+		int sizeSegment = Integer.parseInt(args[2]);
 
+		Injector injector = Guice.createInjector(new ModuleInjector());
+		
 		TokenReaderFactory tokenReaderFactory = injector.getInstance(TokenReaderFactory.class);
 		TokenReader tokenReader = tokenReaderFactory.create();
 
@@ -46,10 +45,10 @@ public class Main {
 		timeSeries.scan();
 
 		int sizeAll = timeSeries.size();
-		int sizeSegment = 24;
+		
 
 		System.out.println("Performing DTW test on random subsequences...");
-		System.out.println("Subseries size: " + sizeSegment);
+		System.out.println("Subsequence size: " + sizeSegment);
 
 		for (int i = 0;; i++) {
 			Random rand = new Random();

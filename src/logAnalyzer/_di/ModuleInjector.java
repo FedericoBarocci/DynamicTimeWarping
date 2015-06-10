@@ -1,7 +1,7 @@
-package logAnalizer._di;
+package logAnalyzer._di;
 
-import logAnalizer.dtw.DTWFactory;
-import logAnalizer.token.reader.TokenReaderFactory;
+import logAnalyzer.dtw.DTWFactory;
+import logAnalyzer.token.reader.TokenReaderFactory;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;

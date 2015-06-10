@@ -1,4 +1,4 @@
-package logAnalizer.timeSeries;
+package logAnalyzer.timeSeries;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import logAnalizer.token.keeper.TokenKeeper;
-import logAnalizer.token.keeper.TokenKeeperFactory;
-import logAnalizer.token.map.TokenMap;
+import logAnalyzer.token.keeper.TokenKeeper;
+import logAnalyzer.token.keeper.TokenKeeperFactory;
+import logAnalyzer.token.map.TokenMap;
 
 import org.apache.commons.lang3.time.DateUtils;
 

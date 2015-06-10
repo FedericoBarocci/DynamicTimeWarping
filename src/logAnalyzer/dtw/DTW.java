@@ -1,7 +1,7 @@
-package logAnalizer.dtw;
+package logAnalyzer.dtw;
 
-import logAnalizer.timeSeries.Distances;
-import logAnalizer.timeSeries.TimeSeries;
+import logAnalyzer.timeSeries.Distances;
+import logAnalyzer.timeSeries.TimeSeries;
 
 public class DTW {
 	
