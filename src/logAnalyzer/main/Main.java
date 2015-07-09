@@ -6,6 +6,7 @@ import logAnalyzer._di.ModuleInjector;
 import logAnalyzer.dtw.DTW;
 import logAnalyzer.dtw.DTWFactory;
 import logAnalyzer.dtw.DTWSolution;
+import logAnalyzer.dtw.options.CliOptions;
 import logAnalyzer.timeSeries.Distances;
 import logAnalyzer.timeSeries.TimeSeries;
 import logAnalyzer.token.reader.TokenReader;
@@ -15,8 +16,15 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class Main {
+	
+	private final CliOptions cliOptions;
 
+	public Main(CliOptions cliOptions) {
+		this.cliOptions = cliOptions;
+	}
+	
 	public static void main(String[] args) {
+		
 		if (args.length != 3) {
 			System.err.println("Usage: [Filename] [indexKey] [sizeSegment]");
 			System.exit(-1);
