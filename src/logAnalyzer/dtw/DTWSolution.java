@@ -1,13 +1,17 @@
 package logAnalyzer.dtw;
 
+import java.util.Date;
+
 public class DTWSolution {
 	
-	private int index;
-	private double distance;
+	private final int index;
+	private final double distance;
+	private final Date date;
 	
-	public DTWSolution(int index, double distance) {
+	public DTWSolution(int index, double distance, Date date) {
 		this.index = index;
 		this.distance = distance;
+		this.date = date;
 	}
 	
 	public int getIndex() {
@@ -16,5 +20,14 @@ public class DTWSolution {
 	
 	public double getDistance() {
 		return distance;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public String toString() {
+		return "index: " + getIndex() + " distance: " + getDistance()
+				+ " date: " + getDate();
 	}
 }

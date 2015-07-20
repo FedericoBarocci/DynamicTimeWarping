@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import logAnalyzer.timeSeries.TimeSeries;
+import javax.inject.Inject;
 
-import com.google.inject.assistedinject.AssistedInject;
+import logAnalyzer.timeSeries.TimeSeries;
 
 public class TokenReader {
 	
 	private final TimeSeries tokens;
 
-	@AssistedInject
+	//@AssistedInject
+	@Inject
 	public TokenReader(TimeSeries tokens) {
 		this.tokens = tokens;
 	}
@@ -44,5 +45,4 @@ public class TokenReader {
 
 		return tokens;
 	}
-
 }

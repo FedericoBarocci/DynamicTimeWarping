@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+import logAnalyzer.printer.Printer;
 import logAnalyzer.token.keeper.TokenKeeper;
 import logAnalyzer.token.keeper.TokenKeeperFactory;
 import logAnalyzer.token.map.TokenMap;
@@ -19,9 +20,11 @@ public class TimeSeries {
 
 	private final DateFormat target = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss.SSSSSS");
 
-	private NavigableMap<Date, TokenKeeper> tokens = new TreeMap<Date, TokenKeeper>();
+	private NavigableMap<Date, TokenKeeper> tokens;
 
-	public TimeSeries() {}
+	public TimeSeries() {
+		this.tokens = new TreeMap<Date, TokenKeeper>();
+	}
 	
 	public TimeSeries(NavigableMap<Date, TokenKeeper> tokens) {
 		this.tokens = tokens;
@@ -71,6 +74,9 @@ public class TimeSeries {
 	}
 	
 	public void scan() {
+		Printer.println(" -> Time intervals count: " + size());
+		Printer.println(" -> Scan:");
+		
 		for(int i = 0; i< tokens.size(); i++) {
 			System.out.println("" + i + ". " + tokens.keySet().toArray()[i]);
 			((TokenKeeper) (tokens.values().toArray()[i])).scan();
