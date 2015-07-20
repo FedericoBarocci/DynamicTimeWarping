@@ -3,6 +3,7 @@ package logAnalyzer.timeSeries.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,7 @@ public class TimeSeriesService {
 		this.dtw = dtw;
 	}
 
-	public TimeSeries read(String path, int key, String cvsSplitBy) throws IOException {
+	public TimeSeries read(String path, int key, String csvSplitBy) throws IOException, ParseException {
 		Printer.print("Reading " + System.getProperty("user.dir") + path + " ... ");
 
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
@@ -37,7 +38,7 @@ public class TimeSeriesService {
 		String line = "";
 
 		while ((line = bufferedReader.readLine()) != null) {
-			values.addAll(Arrays.asList(line.split(cvsSplitBy)));
+			values.addAll(Arrays.asList(line.split(csvSplitBy)));
 			timeSeries.add(values, key);
 			values.clear();
 		}

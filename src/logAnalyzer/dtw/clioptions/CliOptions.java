@@ -36,7 +36,7 @@ public class CliOptions {
 			
 			for (Option input : commandLine.getOptions()) {
 				optionMap.get(input).ifPresent(optEnum->{
-					optEnum.configure(configuration, input.getValue());
+					optEnum.configure(configuration, input.getValues());
 				});
 			}
 		} catch (ParseException e) {

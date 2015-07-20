@@ -18,12 +18,12 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).required().hasArg().argName(getName())
+			return Option.builder(getName()).required().hasArgs()/*.argName(getName())*/
 					.desc(getDescription()).build();
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
+		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setFileNameIn(optionValue);
 		}
 	}, FOUT {
@@ -44,8 +44,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setFileNameOut(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setFileNameOut(optionValue[0]);
 		}
 	}, FQUERY {
 		@Override
@@ -60,13 +60,13 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArgs().argName(getName())
 					.desc(getDescription()).build();
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setFileNameQuery(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setFileNameQuery(optionValue[0]);
 		}
 	}, LIN {
 		@Override
@@ -86,8 +86,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setLenSeqIn(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setLenSeqIn(optionValue[0]);
 		}
 	}, LOUT {
 		@Override
@@ -107,8 +107,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setLenSeqOut(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setLenSeqOut(optionValue[0]);
 		}
 	}, TOKENSIN {
 		@Override
@@ -128,8 +128,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setTokensIn(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setTokensIn(optionValue[0]);
 		}
 	}, TOKENSOUT {
 		@Override
@@ -149,8 +149,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setTokensOut(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setTokensOut(optionValue[0]);
 		}
 	}, INDEXIN {
 		@Override
@@ -170,8 +170,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setIndexKeyIn(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setIndexKeyIn(optionValue[0]);
 		}
 	}, INDEXQUERY {
 		@Override
@@ -191,8 +191,8 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
-			configuration.setIndexKeyQuery(optionValue);
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setIndexKeyQuery(optionValue[0]);
 		}
 	}, PRINTMATRIX {
 		@Override
@@ -212,15 +212,36 @@ public enum OptionValues {
 		}
 
 		@Override
-		public void configure(Configuration configuration, String optionValue) {
+		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setPrintMatrix();
+		}
+	}, PRINTDB {
+		@Override
+		public String getName() {
+			return "printdb";
+		}
+
+		@Override
+		protected String getDescription() {
+			return "Print input db";
+		}
+
+		@Override
+		public Option getOption() {
+			return Option.builder(getName()).hasArg(false).argName(getName())
+					.desc(getDescription()).build();
+		}
+
+		@Override
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setPrintDB();
 		}
 	};
 	
 	abstract public String getName();
 	abstract protected String getDescription();
 	abstract public Option getOption();
-	abstract public void configure(Configuration configuration, String optionValue);
+	abstract public void configure(Configuration configuration, String[] optionValue);
 	
 	//private static Configuration configuration = ConfigurationProvider.get();
 }

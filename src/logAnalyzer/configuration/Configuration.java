@@ -9,8 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.inject.Singleton;
+
 import logAnalyzer.printer.Printer;
 
+@Singleton
 public class Configuration {
 	
 	private static final int DEFAULT_LEN_SEQ_IN = 24;
@@ -25,12 +28,21 @@ public class Configuration {
 	private int indexKeyIn = 0;
 	private int indexKeyQuery = 0;
 	private boolean printMatrix = false;
+	private boolean printDB = false;
 	
 	public String getFileNameIn() {
 		return fileNameIn;
 	}
-	public void setFileNameIn(String fileIn) {
-		this.fileNameIn = fileIn;
+	public void setFileNameIn(String[] fileIn) {
+		this.fileNameIn = fileIn[0];
+		
+		if (fileIn.length <= 3) {
+			this.indexKeyIn = Integer.parseInt(fileIn[1]); 
+		}
+		
+		if (fileIn.length == 3) {
+			this.lenSeqIn = Integer.parseInt(fileIn[2]); 
+		}
 	}
 	
 	public Optional<String> getFileNameOut() {
@@ -99,6 +111,13 @@ public class Configuration {
 	}
 	public void setPrintMatrix() {
 		this.printMatrix = true;
+	}
+	
+	public boolean isPrintDB() {
+		return printDB;
+	}
+	public void setPrintDB() {
+		this.printDB = true;
 	}
 	
 	public Configuration validate() {

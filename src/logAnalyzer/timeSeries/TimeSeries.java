@@ -40,24 +40,19 @@ public class TimeSeries {
 		return app;
 	}
 	
-	public void add(List<String> elements, int key) {
+	public void add(List<String> elements, int key) throws ParseException {
 		Date dateKey;
 		
-		try {
-			Date date = target.parse(elements.get(key));
-			dateKey = DateUtils.truncate(date, Calendar.HOUR);
-			
-			elements.remove(key);
-			
-			if(tokens.containsKey(dateKey)) {
-				tokens.get(dateKey).add(elements);
-			}
-			else {
-				tokens.put(dateKey, TokenKeeperFactory.create(elements));
-			}
-		} 
-		catch (ParseException e) {
-			e.printStackTrace();
+		Date date = target.parse(elements.get(key));
+		dateKey = DateUtils.truncate(date, Calendar.HOUR);
+		
+		elements.remove(key);
+		
+		if(tokens.containsKey(dateKey)) {
+			tokens.get(dateKey).add(elements);
+		}
+		else {
+			tokens.put(dateKey, TokenKeeperFactory.create(elements));
 		}
 	}
 

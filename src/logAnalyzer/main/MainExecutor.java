@@ -1,6 +1,7 @@
 package logAnalyzer.main;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.NoSuchElementException;
 
 import javax.inject.Inject;
@@ -25,10 +26,13 @@ public class MainExecutor implements IMainExecutor {
 	@Override
 	public void start(String[] args) {
 		Configuration config = cliOptions.parse(args);
-
+		
 		try {
 			TimeSeries db = timeSeriesService.read(config.getFileNameIn(), config.getIndexKeyIn(), ";");
-			db.scan();
+			
+			if (config.isPrintDB()) {
+				db.scan();
+			}
 			
 			try {
 				String queryFileName = config.getFileNameQuery().get();
@@ -39,7 +43,7 @@ public class MainExecutor implements IMainExecutor {
 				timeSeriesService.analyze(db, config.getLenSeqIn());
 			}
 		} 
-		catch (IOException e) {
+		catch (IOException | ParseException e) {
 			Printer.printlnErr(e.getLocalizedMessage());
 		}
 	}
