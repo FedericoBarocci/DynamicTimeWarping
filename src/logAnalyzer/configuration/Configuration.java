@@ -9,9 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import logAnalyzer.printer.Printer;
+import logAnalyzer.printer.PrinterConfigurator;
 
 @Singleton
 public class Configuration {
@@ -21,28 +23,31 @@ public class Configuration {
 	private String fileNameIn;
 	private Optional<String> fileNameOut = Optional.empty();
 	private Optional<String> fileNameQuery = Optional.empty();
-	private int lenSeqIn = 0;
-	private int lenSeqOut = 0;
+	private int lenQuery = 0;
+	private int lenMatch = 0;
 	private List<String> tokensIn = new ArrayList<String>();
 	private List<String> tokensOut = new ArrayList<String>();
 	private int indexKeyIn = 0;
 	private int indexKeyQuery = 0;
 	private boolean printMatrix = false;
 	private boolean printDB = false;
+	private boolean help = false;
+
+	private final PrinterConfigurator printerConfigurator;
+
+	@Inject
+	public Configuration(PrinterConfigurator printerConfigurator) {
+		this.printerConfigurator = printerConfigurator;
+		
+		//Default video output
+		printerConfigurator.bindVideo();
+	}
 	
 	public String getFileNameIn() {
 		return fileNameIn;
 	}
-	public void setFileNameIn(String[] fileIn) {
-		this.fileNameIn = fileIn[0];
-		
-		if (fileIn.length <= 3) {
-			this.indexKeyIn = Integer.parseInt(fileIn[1]); 
-		}
-		
-		if (fileIn.length == 3) {
-			this.lenSeqIn = Integer.parseInt(fileIn[2]); 
-		}
+	public void setFileNameIn(String fileIn) {
+		this.fileNameIn = fileIn;
 	}
 	
 	public Optional<String> getFileNameOut() {
@@ -50,6 +55,7 @@ public class Configuration {
 	}
 	public void setFileNameOut(String fileOut) {
 		this.fileNameOut = Optional.ofNullable(fileOut);
+		printerConfigurator.bindFile(fileNameOut.get());
 	}
 	
 	public Optional<String> getFileNameQuery() {
@@ -61,21 +67,18 @@ public class Configuration {
 //		this.lenSeqOut = this.lenSeqIn;
 	}
 	
-	public int getLenSeqIn() {
-		return lenSeqIn;
+	public int getLenQuery() {
+		return lenQuery;
 	}
-	public void setLenSeqIn(String lenSeqIn) {
-//		if (! fileQuery.isPresent()) {
-			this.lenSeqIn = Integer.parseInt(lenSeqIn);
-//			this.lenSeqOut = this.lenSeqIn;
-//		}
+	public void setLenQuery(String lenSeqIn) {
+		this.lenQuery = Integer.parseInt(lenSeqIn);
 	}
 	
-	public int getLenSeqOut() {
-		return lenSeqOut;
+	public int getLenMatch() {
+		return lenMatch;
 	}
-	public void setLenSeqOut(String lenSeqOut) {
-		this.lenSeqOut = Integer.parseInt(lenSeqOut);
+	public void setLenMatch(String lenSeqOut) {
+		this.lenMatch = Integer.parseInt(lenSeqOut);
 	}
 	
 	public List<String> getTokensIn() {
@@ -120,20 +123,32 @@ public class Configuration {
 		this.printDB = true;
 	}
 	
-	public Configuration validate() {
-		this.fileNameQuery.ifPresent(c->{
-			this.lenSeqIn = countLines(c);
-		});
+	public boolean isHelp() {
+		return help;
+	}
+	public void setHelp() {
+		this.help = true;
+	}
+	
+	public void validate() {
+//		this.fileNameQuery.ifPresent(c->{
+//			this.lenQuery = countLines(c);
+//		});
 		
-		if (this.lenSeqIn == 0) {
-			this.lenSeqIn = DEFAULT_LEN_SEQ_IN;
+		if (fileNameQuery.isPresent()) {
+			lenQuery = countLines(fileNameQuery.get());
+		}
+		else {
+			indexKeyQuery = indexKeyIn;
 		}
 		
-		if (this.lenSeqOut == 0) {
-			this.lenSeqOut = this.lenSeqIn;
+		if (lenQuery == 0) {
+			lenQuery = DEFAULT_LEN_SEQ_IN;
 		}
 		
-		return this;
+		if (lenMatch == 0) {
+			lenMatch = lenQuery;
+		}
 	}
 	
 	private int countLines(String filename) {
@@ -146,10 +161,33 @@ public class Configuration {
 			lines = lineNumberReader.getLineNumber();
 			lineNumberReader.close();
 		} catch (IOException e) {
-			Printer.printlnErr(e.toString());
+			Printer.get().printlnErr(e.toString());
 		}
 		
 		return lines;
+	}
+	public void show() {
+		System.out.println("\tfileNameIn: " + fileNameIn);
+		System.out.println("\tfileNameOut: " + fileNameOut.orElse("NON"));
+		System.out.println("\tfileNameQuery: " + fileNameQuery.orElse("NON"));
+		System.out.println("\tlenQuery: " + lenQuery);
+		System.out.println("\tlenMatch: " + lenMatch);
+		
+		System.out.print("\ttokensIn: { ");
+		tokensIn.forEach(s->{System.out.print(s + " ");});
+		System.out.println(" }");
+		
+		System.out.print("\ttokensOut: { ");
+		tokensOut.forEach(s->{System.out.print(s + " ");});
+		System.out.println(" }");
+		
+		System.out.println("\tindexKeyIn: " + indexKeyIn);
+		System.out.println("\tindexKeyQuery: " + indexKeyQuery);
+		System.out.println("\tprintMatrix: " + printMatrix);
+		System.out.println("\tprintDB: " + printDB);
+		System.out.println("\thelp: " + help);
+		
+		System.out.println();
 	}
 
 }

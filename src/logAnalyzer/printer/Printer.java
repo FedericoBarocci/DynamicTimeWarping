@@ -1,22 +1,23 @@
 package logAnalyzer.printer;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class Printer {
-	
-	public static void println() {
-		System.out.println("");
-	}
-	
-	public static void print(String msg) {
-		System.out.print(msg);
-	}
-	
-	public static void println(String msg) {
-		System.out.println(msg);
-	}
 
-	public static void printlnErr(String msg) {
-		System.err.println(msg);
-		System.exit(-1);
+	private static IPrinter printer;
+	
+	@Inject
+	public Printer(VideoPrinter videoPrinter) {
+		Printer.printer = videoPrinter;
+	}
+	
+	public static void bind(IPrinter printer) {
+		Printer.printer = printer;
+	}
+		
+	public static IPrinter get() {
+		return printer;
 	}
 }

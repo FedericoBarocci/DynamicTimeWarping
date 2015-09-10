@@ -30,7 +30,7 @@ public class TimeSeriesService {
 	}
 
 	public TimeSeries read(String path, int key, String csvSplitBy) throws IOException, ParseException {
-		Printer.print("Reading " + System.getProperty("user.dir") + path + " ... ");
+		Printer.get().print("Reading " + System.getProperty("user.dir") + path + " ... ");
 
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 		TimeSeries timeSeries = timeSeriesFactory.build();
@@ -45,14 +45,15 @@ public class TimeSeriesService {
 		
 		bufferedReader.close();
 
-		Printer.println("done.");
+		Printer.get().println("done.");
 		
 		return timeSeries;
 	}
 	
-	public void analyze(TimeSeries db, int lenQuery) {
-		Printer.println("Performing DTW test on random subsequences...");
-		Printer.println("Subsequence size: " + lenQuery);
+	public void analyze(TimeSeries db, int lenQuery, int lenMatch) {
+		Printer.get().println("Performing DTW test on random subsequences...");
+		Printer.get().println("Subsequence size: " + lenQuery);
+		Printer.get().println("Matching size: " + lenMatch);
 
 		int i = 0;
 		Random rand = new Random();
@@ -61,28 +62,27 @@ public class TimeSeriesService {
 			int indexdb = rand.nextInt(db.size() - lenQuery);
 
 			TimeSeries query = db.getSegment(indexdb, indexdb + lenQuery);
-			Printer.println("" + i + ". TestIndex = " + indexdb + " DateTest = " + db.getKey(indexdb));
+			Printer.get().println("" + i + ". TestIndex = " + indexdb + " DateTest = " + db.getKey(indexdb));
 			
-			DTWSolution e = dtw.findSolution(Distances.EUCLIDEAN, db, query, indexdb, lenQuery);
-			Printer.println("" + i + ". EUCLIDEAN DISTANCE. " + e);
+			DTWSolution e = dtw.findSolution(Distances.EUCLIDEAN, db, query, indexdb, /*lenQuery,*/ lenMatch);
+			Printer.get().println("" + i + ". EUCLIDEAN DISTANCE. " + e);
 			
-			DTWSolution m = dtw.findSolution(Distances.MANATTHAN, db, query, indexdb, lenQuery);
-			Printer.println("" + i + ". MANATTHAN DISTANCE. " + m);
+			DTWSolution m = dtw.findSolution(Distances.MANATTHAN, db, query, indexdb, /*lenQuery,*/ lenMatch);
+			Printer.get().println("" + i + ". MANATTHAN DISTANCE. " + m);
 			
-			Printer.println();
+			Printer.get().println();
 			i++;
 		}
 	}
 
 	public void analyze(TimeSeries db, TimeSeries query) {
-		Printer.println("Performing DTW test on 2 input sequences...");
+		Printer.get().println("Performing DTW test on 2 input sequences...");
 		
 		DTWSolution e = dtw.findSolution(Distances.EUCLIDEAN, db, query);
 		DTWSolution m = dtw.findSolution(Distances.MANATTHAN, db, query);
 
-		Printer.println("EUCLIDEAN DISTANCE. " + e);
-		Printer.println("MANATTHAN DISTANCE. " + m);
-		
-		Printer.println();
+		Printer.get().println("EUCLIDEAN DISTANCE. " + e);
+		Printer.get().println("MANATTHAN DISTANCE. " + m);
+		Printer.get().println();
 	}
 }

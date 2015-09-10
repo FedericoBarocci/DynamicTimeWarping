@@ -23,26 +23,42 @@ public class CliOptions {
 		this.optionMap = optionMap;
 		this.configuration = configuration;
 		
-		//optionMap.keySet().forEach(option->{
+		//Initialize command line options
 		for(OptionValues option : OptionValues.values()){
-			options.addOption(option.getOption());		
+			options.addOption(option.getOption());
 		}
 	}
 	
 	public Configuration parse(String[] args) {
+		//for(String s : args) System.out.println(s);
 		try {
+			//Parsing command line args
 			DefaultParser defaultParser = new DefaultParser();
 			CommandLine commandLine = defaultParser.parse(options, args);
 			
+			//[debug] Show parsed input
+			for (Option input : commandLine.getOptions()) {
+				System.out.println(input.getOpt() + " -> " + input.getValue());
+			}
+			
+			//Configuration step
 			for (Option input : commandLine.getOptions()) {
 				optionMap.get(input).ifPresent(optEnum->{
 					optEnum.configure(configuration, input.getValues());
 				});
 			}
+			
+			//Fix bad values for subsequences's length
+			configuration.validate();
+			
+			//[debug] Show defined configuration
+			System.out.println("Configuration DONE!");
+			configuration.show();
 		} catch (ParseException e) {
-			Printer.printlnErr(e.toString());
+			Printer.get().printlnErr(e.toString());
 		}
 		
-		return configuration.validate();
+		//Fix bad values for subsequences's length
+		return configuration;
 	}
 }

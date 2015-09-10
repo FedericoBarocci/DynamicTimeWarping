@@ -25,6 +25,7 @@ public class MainExecutor implements IMainExecutor {
 
 	@Override
 	public void start(String[] args) {
+		//Parsing command line options
 		Configuration config = cliOptions.parse(args);
 		
 		try {
@@ -35,16 +36,20 @@ public class MainExecutor implements IMainExecutor {
 			}
 			
 			try {
+				//Only with file query
 				String queryFileName = config.getFileNameQuery().get();
 				TimeSeries query = timeSeriesService.read(queryFileName, config.getIndexKeyQuery(), ";");
+				//TODO Ritorna dimensioni sbagliate delle timeseries mentre nell'altro è ok 
+				//System.out.println();
 				timeSeriesService.analyze(db, query);
 			}
 			catch (NoSuchElementException e) {
-				timeSeriesService.analyze(db, config.getLenSeqIn());
+				//No file query, loop inner tests
+				timeSeriesService.analyze(db, config.getLenQuery(), config.getLenMatch());
 			}
 		} 
 		catch (IOException | ParseException e) {
-			Printer.printlnErr(e.getLocalizedMessage());
+			Printer.get().printlnErr(e.getLocalizedMessage());
 		}
 	}
 }

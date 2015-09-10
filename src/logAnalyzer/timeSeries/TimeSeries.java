@@ -69,8 +69,8 @@ public class TimeSeries {
 	}
 	
 	public void scan() {
-		Printer.println(" -> Time intervals count: " + size());
-		Printer.println(" -> Scan:");
+		Printer.get().println(" -> Time intervals count: " + size());
+		Printer.get().println(" -> Scan:");
 		
 		for(int i = 0; i< tokens.size(); i++) {
 			System.out.println("" + i + ". " + tokens.keySet().toArray()[i]);
