@@ -36,7 +36,7 @@ public class TimeSeriesService {
 		TimeSeries timeSeries = timeSeriesFactory.build();
 		List<String> values = new ArrayList<String>();
 		String line = "";
-
+		
 		while ((line = bufferedReader.readLine()) != null) {
 			values.addAll(Arrays.asList(line.split(csvSplitBy)));
 			timeSeries.add(values, key);

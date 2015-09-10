@@ -39,8 +39,6 @@ public class MainExecutor implements IMainExecutor {
 				//Only with file query
 				String queryFileName = config.getFileNameQuery().get();
 				TimeSeries query = timeSeriesService.read(queryFileName, config.getIndexKeyQuery(), ";");
-				//TODO Ritorna dimensioni sbagliate delle timeseries mentre nell'altro è ok 
-				//System.out.println();
 				timeSeriesService.analyze(db, query);
 			}
 			catch (NoSuchElementException e) {

@@ -136,6 +136,9 @@ public class Configuration {
 //		});
 		
 		if (fileNameQuery.isPresent()) {
+			//TODO: Wrong!!! i token sono gruppi di eventi temporali vicini
+			// non si possono contare in questo modo!
+			// La lunghezza della query conta il numero di token
 			lenQuery = countLines(fileNameQuery.get());
 		}
 		else {

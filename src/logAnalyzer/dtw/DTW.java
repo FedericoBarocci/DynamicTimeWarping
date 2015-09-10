@@ -66,7 +66,6 @@ public class DTW {
 		}
 
 		if (configuration.isPrintMatrix()) {
-			System.out.println("SIIII");
 			printMatrix(functor, query, db.getSegment(indexSolution, indexSolution + query.size()));
 		}
 		
