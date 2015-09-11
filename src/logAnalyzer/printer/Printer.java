@@ -9,7 +9,7 @@ public class Printer {
 	private static IPrinter printer;
 	
 	@Inject
-	public Printer(VideoPrinter videoPrinter) {
+	public Printer(ConsollePrinter videoPrinter) {
 		Printer.printer = videoPrinter;
 	}
 	

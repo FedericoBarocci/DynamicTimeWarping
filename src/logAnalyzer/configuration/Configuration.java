@@ -1,9 +1,5 @@
 package logAnalyzer.configuration;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,13 +8,16 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import logAnalyzer.printer.Printer;
 import logAnalyzer.printer.PrinterConfigurator;
+import logAnalyzer.timeSeries.TimeSeries;
+import logAnalyzer.timeSeries.service.TimeSeriesReader;
 
 @Singleton
 public class Configuration {
 	
 	private static final int DEFAULT_LEN_SEQ_IN = 24;
+	private static final String CSV_SEPARATOR = ";";
+	private static final String TOKENS_SPLIT_BY = ",";
 	
 	private String fileNameIn;
 	private Optional<String> fileNameOut = Optional.empty();
@@ -32,15 +31,28 @@ public class Configuration {
 	private boolean printMatrix = false;
 	private boolean printDB = false;
 	private boolean help = false;
+	
+	private TimeSeries db;
+	private Optional<TimeSeries> query = Optional.empty();
 
 	private final PrinterConfigurator printerConfigurator;
+	private final TimeSeriesReader timeSeriesReader;
 
 	@Inject
-	public Configuration(PrinterConfigurator printerConfigurator) {
+	public Configuration(PrinterConfigurator printerConfigurator, TimeSeriesReader timeSeriesReader) {
 		this.printerConfigurator = printerConfigurator;
+		this.timeSeriesReader = timeSeriesReader;
 		
-		//Default video output
-		printerConfigurator.bindVideo();
+		//Default output
+		printerConfigurator.bindConsolle();
+	}
+	
+	public TimeSeries getDB() {
+		return db;
+	}
+	
+	public Optional<TimeSeries> getQuery() {
+		return query;
 	}
 	
 	public String getFileNameIn() {
@@ -63,8 +75,6 @@ public class Configuration {
 	}
 	public void setFileNameQuery(String fileQuery) {
 		this.fileNameQuery = Optional.ofNullable(fileQuery);
-//		this.lenSeqIn = countLines(fileQuery);
-//		this.lenSeqOut = this.lenSeqIn;
 	}
 	
 	public int getLenQuery() {
@@ -85,14 +95,14 @@ public class Configuration {
 		return tokensIn;
 	}
 	public void setTokensIn(String tokensIn) {
-		this.tokensIn = Arrays.asList(tokensIn.split(",") );
+		this.tokensIn = Arrays.asList(tokensIn.split(TOKENS_SPLIT_BY) );
 	}
 	
 	public List<String> getTokensOut() {
 		return tokensOut;
 	}
 	public void setTokensOut(String tokensOut) {
-		this.tokensOut = Arrays.asList(tokensOut.split(",") );
+		this.tokensOut = Arrays.asList(tokensOut.split(TOKENS_SPLIT_BY) );
 	}
 	
 	public int getIndexKeyIn() {
@@ -131,19 +141,12 @@ public class Configuration {
 	}
 	
 	public void validate() {
-//		this.fileNameQuery.ifPresent(c->{
-//			this.lenQuery = countLines(c);
-//		});
+		db = timeSeriesReader.read(getFileNameIn(), getIndexKeyIn(), CSV_SEPARATOR);
 		
-		if (fileNameQuery.isPresent()) {
-			//TODO: Wrong!!! i token sono gruppi di eventi temporali vicini
-			// non si possono contare in questo modo!
-			// La lunghezza della query conta il numero di token
-			lenQuery = countLines(fileNameQuery.get());
-		}
-		else {
-			indexKeyQuery = indexKeyIn;
-		}
+		getFileNameQuery().ifPresent(queryFileName->{
+			query = Optional.of(timeSeriesReader.read(queryFileName, getIndexKeyQuery(), CSV_SEPARATOR));
+			getQuery().ifPresent(c->{lenQuery = c.size();});
+		});
 		
 		if (lenQuery == 0) {
 			lenQuery = DEFAULT_LEN_SEQ_IN;
@@ -154,22 +157,7 @@ public class Configuration {
 		}
 	}
 	
-	private int countLines(String filename) {
-		int lines = 0;
-		
-		try {
-			File file = new File(filename);
-			LineNumberReader lineNumberReader = new LineNumberReader(new FileReader(file));
-			lineNumberReader.skip(Long.MAX_VALUE);
-			lines = lineNumberReader.getLineNumber();
-			lineNumberReader.close();
-		} catch (IOException e) {
-			Printer.get().printlnErr(e.toString());
-		}
-		
-		return lines;
-	}
-	public void show() {
+	public void showConfigStatus() {
 		System.out.println("\tfileNameIn: " + fileNameIn);
 		System.out.println("\tfileNameOut: " + fileNameOut.orElse("NON"));
 		System.out.println("\tfileNameQuery: " + fileNameQuery.orElse("NON"));
@@ -192,5 +180,5 @@ public class Configuration {
 		
 		System.out.println();
 	}
-
+	
 }

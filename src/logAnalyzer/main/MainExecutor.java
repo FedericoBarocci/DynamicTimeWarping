@@ -1,53 +1,42 @@
 package logAnalyzer.main;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.NoSuchElementException;
 
 import javax.inject.Inject;
 
 import logAnalyzer.configuration.Configuration;
 import logAnalyzer.dtw.clioptions.CliOptions;
-import logAnalyzer.printer.Printer;
 import logAnalyzer.timeSeries.TimeSeries;
-import logAnalyzer.timeSeries.service.TimeSeriesService;
+import logAnalyzer.timeSeries.service.TimeSeriesAnalyzer;
 
 public class MainExecutor implements IMainExecutor {
 
 	private final CliOptions cliOptions;
-	private final TimeSeriesService timeSeriesService;
+	private final TimeSeriesAnalyzer timeSeriesAnalyzer;
 
 	@Inject
-	public MainExecutor(CliOptions cliOptions, TimeSeriesService timeSeriesService) {
+	public MainExecutor(CliOptions cliOptions, TimeSeriesAnalyzer timeSeriesAnalyzer) {
 		this.cliOptions = cliOptions;
-		this.timeSeriesService = timeSeriesService;
+		this.timeSeriesAnalyzer = timeSeriesAnalyzer;
 	}
 
 	@Override
 	public void start(String[] args) {
 		//Parsing command line options
-		Configuration config = cliOptions.parse(args);
+		Configuration configuration = cliOptions.parse(args);
+		TimeSeries db = configuration.getDB();
+		
+		if (configuration.isPrintDB()) {
+			db.scan();
+		}
 		
 		try {
-			TimeSeries db = timeSeriesService.read(config.getFileNameIn(), config.getIndexKeyIn(), ";");
-			
-			if (config.isPrintDB()) {
-				db.scan();
-			}
-			
-			try {
-				//Only with file query
-				String queryFileName = config.getFileNameQuery().get();
-				TimeSeries query = timeSeriesService.read(queryFileName, config.getIndexKeyQuery(), ";");
-				timeSeriesService.analyze(db, query);
-			}
-			catch (NoSuchElementException e) {
-				//No file query, loop inner tests
-				timeSeriesService.analyze(db, config.getLenQuery(), config.getLenMatch());
-			}
-		} 
-		catch (IOException | ParseException e) {
-			Printer.get().printlnErr(e.getLocalizedMessage());
+			// Only with file query
+			TimeSeries query = configuration.getQuery().get();
+			timeSeriesAnalyzer.analyze(db, query);
+		} catch (NoSuchElementException e) {
+			// No file query, loop inner tests
+			timeSeriesAnalyzer.analyze(db, configuration.getLenQuery(), configuration.getLenMatch());
 		}
 	}
 }

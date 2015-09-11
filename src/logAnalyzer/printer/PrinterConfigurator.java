@@ -5,16 +5,16 @@ import javax.inject.Inject;
 public class PrinterConfigurator {
 
 	private final FilePrinter filePrinter;
-	private final VideoPrinter videoPrinter;
+	private final ConsollePrinter consollePrinter;
 
 	@Inject
-	public PrinterConfigurator(FilePrinter filePrinter, VideoPrinter videoPrinter) {
+	public PrinterConfigurator(FilePrinter filePrinter, ConsollePrinter consollePrinter) {
 		this.filePrinter = filePrinter;
-		this.videoPrinter = videoPrinter;
+		this.consollePrinter = consollePrinter;
 	}
 	
-	public void bindVideo() {
-		Printer.bind(videoPrinter);
+	public void bindConsolle() {
+		Printer.bind(consollePrinter);
 	}
 	
 	public void bindFile(String filename) {

@@ -53,7 +53,7 @@ public class CliOptions {
 			
 			//[debug] Show defined configuration
 			System.out.println("Configuration DONE!");
-			configuration.show();
+			configuration.showConfigStatus();
 		} catch (ParseException e) {
 			Printer.get().printlnErr(e.toString());
 		}

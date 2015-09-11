@@ -1,12 +1,5 @@
 package logAnalyzer.timeSeries.service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -16,38 +9,14 @@ import logAnalyzer.dtw.DTWSolution;
 import logAnalyzer.printer.Printer;
 import logAnalyzer.timeSeries.Distances;
 import logAnalyzer.timeSeries.TimeSeries;
-import logAnalyzer.timeSeries.TimeSeriesFactory;
 
-public class TimeSeriesService {
+public class TimeSeriesAnalyzer {
 	
-	private final TimeSeriesFactory timeSeriesFactory;
 	private final DTW dtw;
-
+	
 	@Inject
-	public TimeSeriesService(TimeSeriesFactory timeSeriesFactory, DTW dtw) {
-		this.timeSeriesFactory = timeSeriesFactory;
+	public TimeSeriesAnalyzer(DTW dtw) {
 		this.dtw = dtw;
-	}
-
-	public TimeSeries read(String path, int key, String csvSplitBy) throws IOException, ParseException {
-		Printer.get().print("Reading " + System.getProperty("user.dir") + path + " ... ");
-
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-		TimeSeries timeSeries = timeSeriesFactory.build();
-		List<String> values = new ArrayList<String>();
-		String line = "";
-		
-		while ((line = bufferedReader.readLine()) != null) {
-			values.addAll(Arrays.asList(line.split(csvSplitBy)));
-			timeSeries.add(values, key);
-			values.clear();
-		}
-		
-		bufferedReader.close();
-
-		Printer.get().println("done.");
-		
-		return timeSeries;
 	}
 	
 	public void analyze(TimeSeries db, int lenQuery, int lenMatch) {

@@ -1,7 +1,7 @@
 package logAnalyzer.printer;
 
 
-public class VideoPrinter implements IPrinter {
+public class ConsollePrinter implements IPrinter {
 	
 	public void println() {
 		System.out.println("");
