@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import logAnalyzer.printer.Printer;
@@ -60,8 +62,21 @@ public class TimeSeries {
 		return tokens.size();
 	}
 	
-	public TokenMap getIndex(int i) {
-		return ((TokenKeeper) tokens.values().toArray()[i]).getTokenMap();
+	public TokenMap getIndex(int i, Optional<List<String>> optionalFilter) {
+		TokenMap tokenMap = ((TokenKeeper) tokens.values().toArray()[i]).getTokenMap();
+		
+		try {
+			List<String> filter = optionalFilter.get();
+			TokenMap filteredMap = new TokenMap();
+			
+			filter.forEach(c->filteredMap.put(c, tokenMap.get(c)));
+			//elements = elements.stream().filter(p -> filter.contains(p)).collect(Collectors.toList());
+
+			return filteredMap;
+		} catch (NoSuchElementException e) {
+		}
+		
+		return tokenMap;
 	}
 	
 	public Date getKey(int i) {
@@ -73,7 +88,7 @@ public class TimeSeries {
 		Printer.get().println(" -> Scan:");
 		
 		for(int i = 0; i< tokens.size(); i++) {
-			System.out.println("" + i + ". " + tokens.keySet().toArray()[i]);
+			Printer.get().println("" + i + ". " + tokens.keySet().toArray()[i]);
 			((TokenKeeper) (tokens.values().toArray()[i])).scan();
 		}
 	}

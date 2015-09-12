@@ -9,8 +9,8 @@ public class Printer {
 	private static IPrinter printer;
 	
 	@Inject
-	public Printer(ConsollePrinter videoPrinter) {
-		Printer.printer = videoPrinter;
+	public Printer(ConsollePrinter consollePrinter) {
+		Printer.printer = consollePrinter;
 	}
 	
 	public static void bind(IPrinter printer) {

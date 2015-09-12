@@ -6,7 +6,8 @@ import logAnalyzer.configuration.Configuration;
 import logAnalyzer.printer.Printer;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -30,16 +31,18 @@ public class CliOptions {
 	}
 	
 	public Configuration parse(String[] args) {
-		//for(String s : args) System.out.println(s);
 		try {
-			//Parsing command line args
-			DefaultParser defaultParser = new DefaultParser();
-			CommandLine commandLine = defaultParser.parse(options, args);
+			Printer.get().println("Starting environment...");
 			
-			//[debug] Show parsed input
-			for (Option input : commandLine.getOptions()) {
-				System.out.println(input.getOpt() + " -> " + input.getValue());
-			}
+			//Parsing command line args
+			
+			//XXX: Apache Commons CLI bug
+			// For now, use GNUParser instead of DefaultParser
+			// https://issues.apache.org/jira/browse/CLI-255
+			
+			//DefaultParser defaultParser = new DefaultParser();
+			CommandLineParser defaultParser = new GnuParser();
+			CommandLine commandLine = defaultParser.parse(options, args);
 			
 			//Configuration step
 			for (Option input : commandLine.getOptions()) {
@@ -49,10 +52,10 @@ public class CliOptions {
 			}
 			
 			//Fix bad values for subsequences's length
-			configuration.validate();
+			configuration.initialize();
 			
 			//[debug] Show defined configuration
-			System.out.println("Configuration DONE!");
+			Printer.get().println("Configuration done!");
 			configuration.showConfigStatus();
 		} catch (ParseException e) {
 			Printer.get().printlnErr(e.toString());

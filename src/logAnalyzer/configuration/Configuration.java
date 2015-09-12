@@ -1,6 +1,5 @@
 package logAnalyzer.configuration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +7,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import logAnalyzer.printer.Printer;
 import logAnalyzer.printer.PrinterConfigurator;
 import logAnalyzer.timeSeries.TimeSeries;
 import logAnalyzer.timeSeries.service.TimeSeriesReader;
@@ -17,15 +17,14 @@ public class Configuration {
 	
 	private static final int DEFAULT_LEN_SEQ_IN = 24;
 	private static final String CSV_SEPARATOR = ";";
-	private static final String TOKENS_SPLIT_BY = ",";
 	
-	private String fileNameIn;
+	private String fileNameIn = "";
 	private Optional<String> fileNameOut = Optional.empty();
 	private Optional<String> fileNameQuery = Optional.empty();
 	private int lenQuery = 0;
 	private int lenMatch = 0;
-	private List<String> tokensIn = new ArrayList<String>();
-	private List<String> tokensOut = new ArrayList<String>();
+	private Optional<List<String>> tokensQuery = Optional.empty();	//new ArrayList<String>();
+	private Optional<List<String>> tokensMatch = Optional.empty();	//new ArrayList<String>();
 	private int indexKeyIn = 0;
 	private int indexKeyQuery = 0;
 	private boolean printMatrix = false;
@@ -91,18 +90,18 @@ public class Configuration {
 		this.lenMatch = Integer.parseInt(lenSeqOut);
 	}
 	
-	public List<String> getTokensIn() {
-		return tokensIn;
+	public Optional<List<String>> getTokensQuery() {
+		return tokensQuery;
 	}
-	public void setTokensIn(String tokensIn) {
-		this.tokensIn = Arrays.asList(tokensIn.split(TOKENS_SPLIT_BY) );
+	public void setTokensQuery(String[] tokensQuery) {
+		this.tokensQuery = Optional.of(Arrays.asList(tokensQuery));		//Arrays.asList(tokensIn.split(TOKENS_SPLIT_BY) );
 	}
 	
-	public List<String> getTokensOut() {
-		return tokensOut;
+	public Optional<List<String>> getTokensMatch() {
+		return tokensMatch;
 	}
-	public void setTokensOut(String tokensOut) {
-		this.tokensOut = Arrays.asList(tokensOut.split(TOKENS_SPLIT_BY) );
+	public void setTokensMatch(String[] tokensMatch) {
+		this.tokensMatch = Optional.of(Arrays.asList(tokensMatch));		//Arrays.asList(tokensOut.split(TOKENS_SPLIT_BY) );
 	}
 	
 	public int getIndexKeyIn() {
@@ -140,7 +139,7 @@ public class Configuration {
 		this.help = true;
 	}
 	
-	public void validate() {
+	public void initialize() {
 		db = timeSeriesReader.read(getFileNameIn(), getIndexKeyIn(), CSV_SEPARATOR);
 		
 		getFileNameQuery().ifPresent(queryFileName->{
@@ -159,26 +158,26 @@ public class Configuration {
 	
 	public void showConfigStatus() {
 		System.out.println("\tfileNameIn: " + fileNameIn);
-		System.out.println("\tfileNameOut: " + fileNameOut.orElse("NON"));
-		System.out.println("\tfileNameQuery: " + fileNameQuery.orElse("NON"));
-		System.out.println("\tlenQuery: " + lenQuery);
-		System.out.println("\tlenMatch: " + lenMatch);
+		Printer.get().println("\tfileNameOut: " + fileNameOut.orElse("NON"));
+		Printer.get().println("\tfileNameQuery: " + fileNameQuery.orElse("NON"));
+		Printer.get().println("\tlenQuery: " + lenQuery);
+		Printer.get().println("\tlenMatch: " + lenMatch);
 		
-		System.out.print("\ttokensIn: { ");
-		tokensIn.forEach(s->{System.out.print(s + " ");});
-		System.out.println(" }");
+		Printer.get().print("\ttokensQuery: { ");
+		tokensQuery.ifPresent(c -> c.forEach(s -> Printer.get().print(s + " ")));
+		Printer.get().println(" }");
 		
-		System.out.print("\ttokensOut: { ");
-		tokensOut.forEach(s->{System.out.print(s + " ");});
-		System.out.println(" }");
+		Printer.get().print("\ttokensMatch: { ");
+		tokensMatch.ifPresent(c -> c.forEach(s -> Printer.get().print(s + " ")));
+		Printer.get().println(" }");
 		
-		System.out.println("\tindexKeyIn: " + indexKeyIn);
-		System.out.println("\tindexKeyQuery: " + indexKeyQuery);
-		System.out.println("\tprintMatrix: " + printMatrix);
-		System.out.println("\tprintDB: " + printDB);
-		System.out.println("\thelp: " + help);
+		Printer.get().println("\tindexKeyIn: " + indexKeyIn);
+		Printer.get().println("\tindexKeyQuery: " + indexKeyQuery);
+		Printer.get().println("\tprintMatrix: " + printMatrix);
+		Printer.get().println("\tprintDB: " + printDB);
+		Printer.get().println("\thelp: " + help);
 		
-		System.out.println();
+		Printer.get().println();
 	}
 	
 }

@@ -17,7 +17,7 @@ import logAnalyzer.timeSeries.TimeSeriesFactory;
 public class TimeSeriesReader {
 	
 	private final TimeSeriesFactory timeSeriesFactory;
-
+	
 	@Inject
 	public TimeSeriesReader(TimeSeriesFactory timeSeriesFactory) {
 		this.timeSeriesFactory = timeSeriesFactory;
@@ -46,7 +46,7 @@ public class TimeSeriesReader {
 		}
 
 		Printer.get().println("done.");
-
+		
 		return timeSeries;
 	}
 	

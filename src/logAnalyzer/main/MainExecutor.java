@@ -33,7 +33,7 @@ public class MainExecutor implements IMainExecutor {
 		try {
 			// Only with file query
 			TimeSeries query = configuration.getQuery().get();
-			timeSeriesAnalyzer.analyze(db, query);
+			timeSeriesAnalyzer.analyze(db, query, configuration.getLenMatch());
 		} catch (NoSuchElementException e) {
 			// No file query, loop inner tests
 			timeSeriesAnalyzer.analyze(db, configuration.getLenQuery(), configuration.getLenMatch());

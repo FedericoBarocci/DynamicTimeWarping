@@ -18,15 +18,16 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).required().hasArg().argName(getName())
-					.desc(getDescription()).build();
+			return Option.builder(getName()).required().hasArg()
+					.argName(getName()).desc(getDescription()).build();
 		}
 
 		@Override
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setFileNameIn(optionValue[0]);
 		}
-	}, FOUT {
+	},
+	FOUT {
 		@Override
 		public String getName() {
 			return "fout";
@@ -47,7 +48,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setFileNameOut(optionValue[0]);
 		}
-	}, FQUERY {
+	},
+	FQUERY {
 		@Override
 		public String getName() {
 			return "fquery";
@@ -68,7 +70,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setFileNameQuery(optionValue[0]);
 		}
-	}, LENQUERY {
+	},
+	LENQUERY {
 		@Override
 		public String getName() {
 			return "lenquery";
@@ -76,7 +79,7 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Length of input subsequence";
+			return "Length of query sequence";
 		}
 
 		@Override
@@ -89,7 +92,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setLenQuery(optionValue[0]);
 		}
-	}, LENMATCH {
+	},
+	LENMATCH {
 		@Override
 		public String getName() {
 			return "lenmatch";
@@ -97,7 +101,7 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Length of output subsequence";
+			return "Length of matching sequence";
 		}
 
 		@Override
@@ -110,31 +114,11 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setLenMatch(optionValue[0]);
 		}
-	}, TOKENSIN {
+	},
+	TOKENSQUERY {
 		@Override
 		public String getName() {
-			return "tokensin";
-		}
-
-		@Override
-		protected String getDescription() {
-			return "Tokens to match in data";
-		}
-
-		@Override
-		public Option getOption() {
-			return Option.builder(getName()).hasArgs().argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
-					.desc(getDescription()).build();
-		}
-
-		@Override
-		public void configure(Configuration configuration, String[] optionValue) {
-			configuration.setTokensIn(optionValue[0]);
-		}
-	}, TOKENSOUT {
-		@Override
-		public String getName() {
-			return "tokensout";
+			return "tokensquery";
 		}
 
 		@Override
@@ -144,15 +128,40 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArgs().argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
+			return Option.builder(getName()).hasArgs().optionalArg(true)
+					.argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
 					.desc(getDescription()).build();
 		}
 
 		@Override
 		public void configure(Configuration configuration, String[] optionValue) {
-			configuration.setTokensOut(optionValue[0]);
+			configuration.setTokensQuery(optionValue);
 		}
-	}, INDEXIN {
+	},
+	TOKENSMATCH {
+		@Override
+		public String getName() {
+			return "tokensmatch";
+		}
+
+		@Override
+		protected String getDescription() {
+			return "Tokens to match in database";
+		}
+
+		@Override
+		public Option getOption() {
+			return Option.builder(getName()).hasArgs().optionalArg(true)
+					.argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
+					.desc(getDescription()).build();
+		}
+
+		@Override
+		public void configure(Configuration configuration, String[] optionValue) {
+			configuration.setTokensMatch(optionValue);
+		}
+	},
+	INDEXIN {
 		@Override
 		public String getName() {
 			return "idxin";
@@ -173,7 +182,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setIndexKeyIn(optionValue[0]);
 		}
-	}, INDEXQUERY {
+	},
+	INDEXQUERY {
 		@Override
 		public String getName() {
 			return "idxq";
@@ -194,7 +204,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setIndexKeyQuery(optionValue[0]);
 		}
-	}, PRINTMATRIX {
+	},
+	PRINTMATRIX {
 		@Override
 		public String getName() {
 			return "matrix";
@@ -215,7 +226,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setPrintMatrix();
 		}
-	}, PRINTDB {
+	},
+	PRINTDB {
 		@Override
 		public String getName() {
 			return "printdb";
@@ -236,7 +248,8 @@ public enum OptionValues {
 		public void configure(Configuration configuration, String[] optionValue) {
 			configuration.setPrintDB();
 		}
-	}, HELP {
+	},
+	HELP {
 		@Override
 		public String getName() {
 			return "help";
@@ -258,11 +271,9 @@ public enum OptionValues {
 			configuration.setHelp();
 		}
 	};
-	
+
 	abstract public String getName();
 	abstract protected String getDescription();
 	abstract public Option getOption();
 	abstract public void configure(Configuration configuration, String[] optionValue);
-	
-	//private static Configuration configuration = ConfigurationProvider.get();
 }
