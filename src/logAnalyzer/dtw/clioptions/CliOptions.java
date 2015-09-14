@@ -8,6 +8,7 @@ import logAnalyzer.printer.Printer;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -49,6 +50,13 @@ public class CliOptions {
 				optionMap.get(input).ifPresent(optEnum->{
 					optEnum.configure(configuration, input.getValues());
 				});
+			}
+			
+			if (configuration.isHelp()) {
+				HelpFormatter formatter = new HelpFormatter();
+				formatter.printHelp("logAnalyzer", options);
+				
+				System.exit(0);
 			}
 			
 			//Fix bad values for subsequences's length

@@ -13,13 +13,13 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Input data file name";
+			return "File name of CSV database";
 		}
 
 		@Override
 		public Option getOption() {
 			return Option.builder(getName()).required().hasArg()
-					.argName(getName()).desc(getDescription()).build();
+					.argName("path").desc(getDescription()).build();
 		}
 
 		@Override
@@ -35,12 +35,12 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Output results file name";
+			return "File name for output results";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("path")
 					.desc(getDescription()).build();
 		}
 
@@ -57,12 +57,12 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Query file name";
+			return "File name of user CSV query";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("path")
 					.desc(getDescription()).build();
 		}
 
@@ -84,7 +84,7 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("int")
 					.desc(getDescription()).build();
 		}
 
@@ -101,12 +101,12 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Length of matching sequence";
+			return "Length of matching sequence in database";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("int")
 					.desc(getDescription()).build();
 		}
 
@@ -129,7 +129,7 @@ public enum OptionValues {
 		@Override
 		public Option getOption() {
 			return Option.builder(getName()).hasArgs().optionalArg(true)
-					.argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
+					.argName("tokens> <...").numberOfArgs(Option.UNLIMITED_VALUES)
 					.desc(getDescription()).build();
 		}
 
@@ -152,7 +152,7 @@ public enum OptionValues {
 		@Override
 		public Option getOption() {
 			return Option.builder(getName()).hasArgs().optionalArg(true)
-					.argName(getName()).numberOfArgs(Option.UNLIMITED_VALUES)
+					.argName("tokens> <...").numberOfArgs(Option.UNLIMITED_VALUES)
 					.desc(getDescription()).build();
 		}
 
@@ -164,17 +164,17 @@ public enum OptionValues {
 	INDEXIN {
 		@Override
 		public String getName() {
-			return "idxin";
+			return "indexin";
 		}
 
 		@Override
 		protected String getDescription() {
-			return "Index of date column in input file";
+			return "Index of date column in db file";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("int")
 					.desc(getDescription()).build();
 		}
 
@@ -186,7 +186,7 @@ public enum OptionValues {
 	INDEXQUERY {
 		@Override
 		public String getName() {
-			return "idxq";
+			return "indexq";
 		}
 
 		@Override
@@ -196,7 +196,7 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg().argName(getName())
+			return Option.builder(getName()).hasArg().argName("int")
 					.desc(getDescription()).build();
 		}
 
@@ -213,12 +213,12 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Print matrix of results";
+			return "Print solution matrix of DTW algorithm";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg(false).argName(getName())
+			return Option.builder(getName()).hasArg(false)
 					.desc(getDescription()).build();
 		}
 
@@ -235,12 +235,12 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Print input db";
+			return "Print parsed input database";
 		}
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg(false).argName(getName())
+			return Option.builder(getName()).hasArg(false)
 					.desc(getDescription()).build();
 		}
 
@@ -262,7 +262,7 @@ public enum OptionValues {
 
 		@Override
 		public Option getOption() {
-			return Option.builder(getName()).hasArg(false).argName(getName())
+			return Option.builder(getName()).hasArg(false)
 					.desc(getDescription()).build();
 		}
 
