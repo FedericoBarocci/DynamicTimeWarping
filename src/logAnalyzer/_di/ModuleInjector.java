@@ -9,9 +9,6 @@ public class ModuleInjector extends AbstractModule {
 
 	@Override
 	protected void configure() {
-//		install(new FactoryModuleBuilder().build(CliOptionsFactory.class));
-//		install(new FactoryModuleBuilder().build(TokenReaderFactory.class));
-//		install(new FactoryModuleBuilder().build(DTWFactory.class));
 		bind(IMainExecutor.class).to(MainExecutor.class);
 	}
 }
