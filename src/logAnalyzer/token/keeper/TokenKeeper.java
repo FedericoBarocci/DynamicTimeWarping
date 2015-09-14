@@ -31,13 +31,4 @@ public class TokenKeeper {
 			System.out.println("\t" + key + ": " + value);
 		});
 	}
-	
-	public TokenMap merge(TokenMap map) {
-		TokenMap result = new TokenMap();
-		
-		result.putAll(tokenMap);
-		result.putAll(map);
-		
-		return result;
-	}
 }

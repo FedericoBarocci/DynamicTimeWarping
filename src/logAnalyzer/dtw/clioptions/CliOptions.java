@@ -59,7 +59,7 @@ public class CliOptions {
 				System.exit(0);
 			}
 			
-			//Fix bad values for subsequences's length
+			//Read input files and fix bad values in subsequences's length
 			configuration.initialize();
 			
 			//[debug] Show defined configuration
@@ -69,7 +69,6 @@ public class CliOptions {
 			Printer.get().printlnErr(e.toString());
 		}
 		
-		//Fix bad values for subsequences's length
 		return configuration;
 	}
 }

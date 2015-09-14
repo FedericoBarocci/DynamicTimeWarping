@@ -13,7 +13,7 @@ public class PrinterConfigurator {
 		this.consollePrinter = consollePrinter;
 	}
 	
-	public void bindConsolle() {
+	public void bindConsole() {
 		Printer.bind(consollePrinter);
 	}
 	

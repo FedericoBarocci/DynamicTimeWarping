@@ -19,18 +19,18 @@ public class TimeSeriesAnalyzer {
 		this.dtw = dtw;
 	}
 	
+	/*Analysis of random query extracted from input database*/
 	public void analyze(TimeSeries db, int lenQuery, int lenMatch) {
 		Printer.get().println("Performing DTW test on random subsequences...");
 		Printer.get().println("Subsequence size: " + lenQuery);
 		Printer.get().println("Matching size: " + lenMatch);
-//		Printer.get().println();
 
 		int i = 0;
 		Random rand = new Random();
 		
 		while (true) {
+			/*Select a random query from db*/
 			int indexdb = rand.nextInt(db.size() - lenQuery);
-
 			TimeSeries query = db.getSegment(indexdb, indexdb + lenQuery-1);
 			Printer.get().println("" + i + ". TestIndex = " + indexdb + " DateTest = " + db.getKey(indexdb));
 			
@@ -45,11 +45,11 @@ public class TimeSeriesAnalyzer {
 		}
 	}
 
+	/*Analysis of user defined query over input database*/
 	public void analyze(TimeSeries db, TimeSeries query, int lenMatch) {
 		Printer.get().println("Performing DTW test on 2 input sequences...");
 		Printer.get().println("Subsequence size: " + query.size());
 		Printer.get().println("Matching size: " + lenMatch);
-//		Printer.get().println();
 		
 		DTWSolution e = dtw.findSolution(Distances.EUCLIDEAN, db, query, lenMatch);
 		Printer.get().println("EUCLIDEAN DISTANCE. " + e);

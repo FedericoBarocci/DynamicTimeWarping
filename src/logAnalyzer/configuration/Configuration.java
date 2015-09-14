@@ -23,14 +23,13 @@ public class Configuration {
 	private Optional<String> fileNameQuery = Optional.empty();
 	private int lenQuery = 0;
 	private int lenMatch = 0;
-	private Optional<List<String>> tokensQuery = Optional.empty();	//new ArrayList<String>();
-	private Optional<List<String>> tokensMatch = Optional.empty();	//new ArrayList<String>();
+	private Optional<List<String>> tokensQuery = Optional.empty();
+	private Optional<List<String>> tokensMatch = Optional.empty();
 	private int indexKeyIn = 0;
 	private int indexKeyQuery = 0;
 	private boolean printMatrix = false;
 	private boolean printDB = false;
 	private boolean help = false;
-	
 	private TimeSeries db;
 	private Optional<TimeSeries> query = Optional.empty();
 
@@ -42,8 +41,8 @@ public class Configuration {
 		this.printerConfigurator = printerConfigurator;
 		this.timeSeriesReader = timeSeriesReader;
 		
-		//Default output
-		printerConfigurator.bindConsolle();
+		//Default output: console
+		printerConfigurator.bindConsole();
 	}
 	
 	public TimeSeries getDB() {
@@ -57,6 +56,7 @@ public class Configuration {
 	public String getFileNameIn() {
 		return fileNameIn;
 	}
+	
 	public void setFileNameIn(String fileIn) {
 		this.fileNameIn = fileIn;
 	}
@@ -64,6 +64,7 @@ public class Configuration {
 	public Optional<String> getFileNameOut() {
 		return fileNameOut;
 	}
+	
 	public void setFileNameOut(String fileOut) {
 		this.fileNameOut = Optional.ofNullable(fileOut);
 		printerConfigurator.bindFile(fileNameOut.get());
@@ -72,6 +73,7 @@ public class Configuration {
 	public Optional<String> getFileNameQuery() {
 		return fileNameQuery;
 	}
+	
 	public void setFileNameQuery(String fileQuery) {
 		this.fileNameQuery = Optional.ofNullable(fileQuery);
 	}
@@ -79,6 +81,7 @@ public class Configuration {
 	public int getLenQuery() {
 		return lenQuery;
 	}
+	
 	public void setLenQuery(String lenSeqIn) {
 		this.lenQuery = Integer.parseInt(lenSeqIn);
 	}
@@ -86,6 +89,7 @@ public class Configuration {
 	public int getLenMatch() {
 		return lenMatch;
 	}
+	
 	public void setLenMatch(String lenSeqOut) {
 		this.lenMatch = Integer.parseInt(lenSeqOut);
 	}
@@ -93,6 +97,7 @@ public class Configuration {
 	public Optional<List<String>> getTokensQuery() {
 		return tokensQuery;
 	}
+	
 	public void setTokensQuery(String[] tokensQuery) {
 		this.tokensQuery = Optional.of(Arrays.asList(tokensQuery));		//Arrays.asList(tokensIn.split(TOKENS_SPLIT_BY) );
 	}
@@ -107,6 +112,7 @@ public class Configuration {
 	public int getIndexKeyIn() {
 		return indexKeyIn;
 	}
+	
 	public void setIndexKeyIn(String indexKeyIn) {
 		this.indexKeyIn = Integer.parseInt(indexKeyIn);
 	}
@@ -114,6 +120,7 @@ public class Configuration {
 	public int getIndexKeyQuery() {
 		return indexKeyQuery;
 	}
+	
 	public void setIndexKeyQuery(String indexKeyQuery) {
 		this.indexKeyQuery = Integer.parseInt(indexKeyQuery);
 	}
@@ -121,6 +128,7 @@ public class Configuration {
 	public boolean isPrintMatrix() {
 		return printMatrix;
 	}
+	
 	public void setPrintMatrix() {
 		this.printMatrix = true;
 	}
@@ -128,6 +136,7 @@ public class Configuration {
 	public boolean isPrintDB() {
 		return printDB;
 	}
+	
 	public void setPrintDB() {
 		this.printDB = true;
 	}
@@ -135,6 +144,7 @@ public class Configuration {
 	public boolean isHelp() {
 		return help;
 	}
+	
 	public void setHelp() {
 		this.help = true;
 	}

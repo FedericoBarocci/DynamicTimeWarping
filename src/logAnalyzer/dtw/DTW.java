@@ -15,7 +15,8 @@ public class DTW {
 		this.configuration = configuration;
 	}
 	
-	public DTWSolution findSolution(Distances functor, TimeSeries db, TimeSeries query, int indexDB, /*int lenQuery,*/ int lenMatch) {
+	/*Test query extracted from the database*/
+	public DTWSolution findSolution(Distances functor, TimeSeries db, TimeSeries query, int indexDB, int lenMatch) {
 		double minDistance = Double.POSITIVE_INFINITY;
 		int indexSolution = 0;
 		DTWMatrix solutionMatrix = new DTWMatrix(query.size(), lenMatch-1);
@@ -50,7 +51,7 @@ public class DTW {
 		return new DTWSolution(indexSolution, minDistance, db.getKey(indexSolution));
 	}
 
-
+	/*Test user provided query*/
 	public DTWSolution findSolution(Distances functor, TimeSeries db, TimeSeries query, int lenMatch) {
 		double minDistance = Double.POSITIVE_INFINITY;
 		int indexSolution = 0;
@@ -76,12 +77,15 @@ public class DTW {
 		return new DTWSolution(indexSolution, minDistance, db.getKey(indexSolution));
 	}
 
+	/*Perform effective DTW algorithm between two time series*/
 	public DTWMatrix calculate(Distances functor, TimeSeries query, TimeSeries sequence) {
 		int i, j;
 		int n = query.size();
 		int m = sequence.size();
 		DTWMatrix matrix = new DTWMatrix(n, m);
 		
+		/*Simple implementation of DTW algorithm*/
+		/*This could be optimized. See: FastDTW, SparseDTW, LB_Keogh, LB_Improved*/
 		for(i = 0; i < n; i++) {
 			for(j = 0; j < m; j++) {
 				double cost = functor.calculate(query.getIndex(i, configuration.getTokensQuery()), sequence.getIndex(j, configuration.getTokensMatch()));
@@ -92,5 +96,4 @@ public class DTW {
 		
 		return matrix;
 	}
-	
 }

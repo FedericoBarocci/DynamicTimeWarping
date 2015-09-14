@@ -28,6 +28,8 @@
                 <exclude name="logAnalyzer/token/reader/TokenReaderFactory.java"/>
                 <exclude name="logAnalyzer/dtw/DTWFactory.java"/>
                 <exclude name="logAnalyzer/dtw/clioptions/CliOptionsFactory.java"/>
+                <exclude name="logAnalyzer/dtw/clioptions/exceptions/InputFileException.java"/>
+                <exclude name="logAnalyzer/dtw/clioptions/exceptions/LengthInException.java"/>
             </fileset>
         </copy>
     </target>
@@ -45,6 +47,8 @@
             <exclude name="logAnalyzer/token/reader/TokenReaderFactory.java"/>
             <exclude name="logAnalyzer/dtw/DTWFactory.java"/>
             <exclude name="logAnalyzer/dtw/clioptions/CliOptionsFactory.java"/>
+            <exclude name="logAnalyzer/dtw/clioptions/exceptions/InputFileException.java"/>
+            <exclude name="logAnalyzer/dtw/clioptions/exceptions/LengthInException.java"/>
             <classpath refid="tirocinio.classpath"/>
         </javac>
     </target>
@@ -64,7 +68,61 @@
     </target>
     <target name="tirocinio">
         <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
-            <arg line="-fin data/filter_eventlog.csv -idxin 2 -lin 24"/>
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_lenMatch_matrix">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -lenmatch 30 -matrix"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_lenMatch">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -lenmatch 30"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_matrix">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -matrix"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_fquery_matrix">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenmatch 24 -fquery data/query_233.csv -indexq 2 -matrix"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_printdb">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -printdb"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_fquery">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenmatch 24 -fquery data/query_233.csv -indexq 2"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_fout">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -fout data/output.txt"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_tokens">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -tokensquery Optical_Module -tokensmatch INFO Optical_Module -matrix"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
+    <target name="tirocinio_help">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -help"/>
             <classpath refid="tirocinio.classpath"/>
         </java>
     </target>

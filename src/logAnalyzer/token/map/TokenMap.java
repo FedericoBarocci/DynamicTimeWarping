@@ -32,10 +32,4 @@ public class TokenMap extends TreeMap<String, Integer> {
 			put(key, value);
 		});
 	}
-	
-	public void empty() {
-		this.values().forEach(c->{
-			c = 0;
-		});
-	}
 }

@@ -32,16 +32,6 @@ public class TimeSeries {
 		this.tokens = tokens;
 	}
 	
-	public TokenMap unify() {
-		TokenMap app = new TokenMap();
-		
-		tokens.values().forEach(c->{
-			app.putAll(c.getTokenMap());
-		});
-		
-		return app;
-	}
-	
 	public void add(List<String> elements, int key) throws ParseException {
 		Date dateKey;
 		

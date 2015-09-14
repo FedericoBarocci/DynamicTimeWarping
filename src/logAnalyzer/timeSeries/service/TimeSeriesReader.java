@@ -23,7 +23,7 @@ public class TimeSeriesReader {
 		this.timeSeriesFactory = timeSeriesFactory;
 	}
 
-	public TimeSeries read(String path, int key, String csvSplitBy) /*throws IOException, ParseException*/ {
+	public TimeSeries read(String path, int key, String csvSplitBy) {
 		Printer.get().print("Reading " + System.getProperty("user.dir") + path + " ... ");
 
 		BufferedReader bufferedReader;
@@ -34,6 +34,7 @@ public class TimeSeriesReader {
 		try {
 			bufferedReader = new BufferedReader(new FileReader(path));
 
+			/*Scan all time series from given file and initialize data structures*/
 			while ((line = bufferedReader.readLine()) != null) {
 				values.addAll(Arrays.asList(line.split(csvSplitBy)));
 				timeSeries.add(values, key);

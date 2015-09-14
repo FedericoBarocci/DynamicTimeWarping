@@ -1,7 +1,6 @@
 package logAnalyzer.timeSeries;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import logAnalyzer.timeSeries.functions.EuclideanDistance;
@@ -22,10 +21,6 @@ public enum Distances {
 	
 	public double calculate(TokenMap from, TokenMap to) {
 		return distanceFunction.distance(mergeKeys(from, to), from, to);
-	}
-	
-	public double calculate(Map<String, String> keys, TokenMap from, TokenMap to) {
-		return distanceFunction.distance(keys, from, to);
 	}
 	
 	private Set<String> mergeKeys(TokenMap a, TokenMap b) {
