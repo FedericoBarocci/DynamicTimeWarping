@@ -5,7 +5,6 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="tirocinio">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../java/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
@@ -24,12 +23,6 @@
             <fileset dir="src">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
-                <exclude name="logAnalyzer/token/reader/TokenReader.java"/>
-                <exclude name="logAnalyzer/token/reader/TokenReaderFactory.java"/>
-                <exclude name="logAnalyzer/dtw/DTWFactory.java"/>
-                <exclude name="logAnalyzer/dtw/clioptions/CliOptionsFactory.java"/>
-                <exclude name="logAnalyzer/dtw/clioptions/exceptions/InputFileException.java"/>
-                <exclude name="logAnalyzer/dtw/clioptions/exceptions/LengthInException.java"/>
             </fileset>
         </copy>
     </target>
@@ -43,29 +36,10 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <exclude name="logAnalyzer/token/reader/TokenReader.java"/>
-            <exclude name="logAnalyzer/token/reader/TokenReaderFactory.java"/>
-            <exclude name="logAnalyzer/dtw/DTWFactory.java"/>
-            <exclude name="logAnalyzer/dtw/clioptions/CliOptionsFactory.java"/>
-            <exclude name="logAnalyzer/dtw/clioptions/exceptions/InputFileException.java"/>
-            <exclude name="logAnalyzer/dtw/clioptions/exceptions/LengthInException.java"/>
             <classpath refid="tirocinio.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
     <target name="tirocinio">
         <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
             <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24"/>

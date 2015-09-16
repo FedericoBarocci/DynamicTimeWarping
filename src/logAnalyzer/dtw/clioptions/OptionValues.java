@@ -13,7 +13,7 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "File name of CSV database";
+			return "File name of CSV database (required)";
 		}
 
 		@Override
@@ -123,7 +123,7 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Tokens to match in query";
+			return "Tokens to consider in query";
 		}
 
 		@Override
@@ -146,7 +146,7 @@ public enum OptionValues {
 
 		@Override
 		protected String getDescription() {
-			return "Tokens to match in database";
+			return "Tokens to consider in database";
 		}
 
 		@Override

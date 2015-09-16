@@ -2,6 +2,7 @@ package logAnalyzer.token.keeper;
 
 import java.util.List;
 
+import logAnalyzer.printer.Printer;
 import logAnalyzer.token.map.TokenMap;
 
 public class TokenKeeper {
@@ -28,7 +29,7 @@ public class TokenKeeper {
 	
 	public void scan() {
 		tokenMap.forEach((key,value)->{
-			System.out.println("\t" + key + ": " + value);
+			Printer.get().println("\t" + key + ": " + value);
 		});
 	}
 }

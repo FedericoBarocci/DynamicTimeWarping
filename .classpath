@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="logAnalyzer/token/reader/TokenReader.java|logAnalyzer/token/reader/TokenReaderFactory.java|logAnalyzer/dtw/DTWFactory.java|logAnalyzer/dtw/clioptions/CliOptionsFactory.java|logAnalyzer/dtw/clioptions/exceptions/InputFileException.java|logAnalyzer/dtw/clioptions/exceptions/LengthInException.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-oracle"/>
 	<classpathentry kind="lib" path="lib/guice/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/guice/guava-16.0.1.jar"/>

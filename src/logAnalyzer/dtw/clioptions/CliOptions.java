@@ -66,7 +66,12 @@ public class CliOptions {
 			Printer.get().println("Configuration done!");
 			configuration.showConfigStatus();
 		} catch (ParseException e) {
-			Printer.get().printlnErr(e.toString());
+			//Printer.get().printlnErr(e.toString());
+			
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("logAnalyzer", options);
+			
+			System.exit(0);
 		}
 		
 		return configuration;

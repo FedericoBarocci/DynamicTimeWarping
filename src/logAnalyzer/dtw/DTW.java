@@ -3,8 +3,8 @@ package logAnalyzer.dtw;
 import javax.inject.Inject;
 
 import logAnalyzer.configuration.Configuration;
-import logAnalyzer.timeSeries.Distances;
 import logAnalyzer.timeSeries.TimeSeries;
+import logAnalyzer.timeSeries.functions.Distances;
 
 public class DTW {
 	
@@ -78,7 +78,7 @@ public class DTW {
 	}
 
 	/*Perform effective DTW algorithm between two time series*/
-	public DTWMatrix calculate(Distances functor, TimeSeries query, TimeSeries sequence) {
+	private DTWMatrix calculate(Distances functor, TimeSeries query, TimeSeries sequence) {
 		int i, j;
 		int n = query.size();
 		int m = sequence.size();
@@ -90,7 +90,8 @@ public class DTW {
 			for(j = 0; j < m; j++) {
 				double cost = functor.calculate(query.getIndex(i, configuration.getTokensQuery()), sequence.getIndex(j, configuration.getTokensMatch()));
 				double m1 = Math.min(matrix.get(i-1, j), matrix.get(i, j-1));
-				matrix.set(i, j, cost + Math.min(m1, matrix.get(i-1, j-1)));
+				double m2 = Math.min(m1, matrix.get(i-1, j-1));
+				matrix.set(i, j, cost + m2);
 			}
 		}
 		

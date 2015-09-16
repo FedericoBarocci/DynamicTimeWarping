@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import logAnalyzer.dtw.DTW;
 import logAnalyzer.dtw.DTWSolution;
 import logAnalyzer.printer.Printer;
-import logAnalyzer.timeSeries.Distances;
 import logAnalyzer.timeSeries.TimeSeries;
+import logAnalyzer.timeSeries.functions.Distances;
 
 public class TimeSeriesAnalyzer {
 	
