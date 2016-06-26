@@ -58,6 +58,12 @@
             <classpath refid="tirocinio.classpath"/>
         </java>
     </target>
+    <target name="tirocinio_help">
+        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
+            <arg line="-help"/>
+            <classpath refid="tirocinio.classpath"/>
+        </java>
+    </target>
     <target name="tirocinio_matrix">
         <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
             <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -matrix"/>
@@ -91,12 +97,6 @@
     <target name="tirocinio_tokens">
         <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
             <arg line="-fin data/filter_eventlog.csv -indexin 2 -tokensquery Optical_Module -tokensmatch INFO Optical_Module -matrix"/>
-            <classpath refid="tirocinio.classpath"/>
-        </java>
-    </target>
-    <target name="tirocinio_help">
-        <java classname="logAnalyzer.main.Main" failonerror="true" fork="yes">
-            <arg line="-fin data/filter_eventlog.csv -indexin 2 -lenquery 24 -help"/>
             <classpath refid="tirocinio.classpath"/>
         </java>
     </target>
